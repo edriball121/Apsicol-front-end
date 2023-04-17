@@ -1,0 +1,19 @@
+/*estilo apsicol*/
+#title1{
+ color: green;
+ font-size: larger;
+}
+#title2{
+  color: red;
+  font-size: larger;
+}
+
+i, span{
+  color: #158427;
+}
+div{
+font-size: large;
+}
+#Apsicol-tittle{
+  font-size: 40px;
+}

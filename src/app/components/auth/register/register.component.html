@@ -1,0 +1,85 @@
+<!-- Section: Design Block -->
+<section class="text-center">
+  <!-- Background image -->
+  <div class="p-5 bg-image" style="
+        background-image: url('./../../../assets/img/auth/fondo-auth.jpg');
+        height: 300px;
+        "></div>
+  <!-- Background image -->
+
+  <div class="card mx-4 mx-md-5 shadow-5-strong">
+    <div class="card-body py-5 px-md-5">
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-12">
+          <h2 class="fw-bold mb-5">Registrar Usuario</h2>
+          <form>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example3">Cedula</label>
+                  <input type="number" id="form3Example3" class="form-control" required />
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Apellido</label>
+                  <input type="text" id="form3Example4" class="form-control" required />
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Email</label>
+                  <input type="email" id="form3Example4" class="form-control" required />
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Dirección</label>
+                  <input type="text" id="form3Example4" class="form-control" required />
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Fecha de nacimiento</label>
+                  <input type="date" id="form3Example4" class="form-control" required />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Nombre</label>
+                  <input type="text" id="form3Example4" class="form-control" required />
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Telefono</label>
+                  <input type="tel" id="form3Example4" class="form-control" required />
+                </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Perfil laboral</label>
+                  <textarea class="form-control" cols="20" rows="9" required></textarea>
+                </div>
+              </div>
+              <hr>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Contraseña</label>
+                  <input type="tel" id="form3Example4" class="form-control" required />
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Repetir contraseña</label>
+                  <input type="tel" id="form3Example4" class="form-control" required />
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-success btn-block mb-4">
+              Registrar usuario
+            </button>
+            <button routerLink="/auth" type="button" class="btn btn-danger btn-block mb-4">
+            Cancelar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section: Design Block -->

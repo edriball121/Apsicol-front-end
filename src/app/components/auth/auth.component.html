@@ -1,0 +1,66 @@
+<!-- Section: Design Block -->
+<section class="text-center">
+  <!-- Background image -->
+  <div class="p-5 bg-image" style="
+        background-image: url('./../../../assets/img/auth/fondo-auth.jpg');
+        height: 300px;
+        "></div>
+  <!-- Background image -->
+
+  <div class="card mx-4 mx-md-5 shadow-5-strong">
+    <div class="card-body py-5 px-md-5">
+
+      <div class="row d-flex justify-content-center">
+        <div class="col-8">
+          <h2 class="fw-bold mb-5">Iniciar sesión</h2>
+          <form>
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <label class="form-label">Usuario</label>
+              <input type="email" id="" class="form-control" required />
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" >Contraseña</label>
+              <input type="password" id="" class="form-control" required />
+            </div>
+
+            <!-- Checkbox -->
+            <div class="form-check d-flex justify-content-center mb-4">
+              <input class="form-check-input me-2" type="checkbox" value="" id="" checked />
+              <label class="form-check-label">
+                Recordar usuario
+              </label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-success btn-block mb-4">
+              Iniciar sesión
+            </button>
+            <div class="text-center">
+              <a routerLink="/recoverPassword">
+                <p>Recuperar contraseña</p>
+              </a>
+            </div>
+            <hr>
+            <div class="text-center">
+              <a routerLink="/register">
+                <p>¿No tienes una cuenta? Registrate Aqui!</p>
+              </a>
+            </div>
+
+            <!-- Register buttons -->
+            <div class="text-center">
+              <p>O inicia sesión con:</p>
+              <button type="button" class="btn btn-link btn-floating mx-1">
+                <i class="fab fa-google fa-lg"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section: Design Block -->

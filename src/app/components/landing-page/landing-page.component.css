@@ -1,0 +1,50 @@
+.tittleCarousel {
+  background-color: white;
+  color: black;
+  font-style: initial;
+  border-style: double;
+  border-width: 10px;
+  border-radius: 10px;
+}
+
+.textCarousel {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 100px;
+}
+
+.carousel-indicators-button {
+  background-color: red;
+}
+
+.btnCarousel {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+hr {
+  border: 0;
+  height: 0;
+  box-shadow: 0 1px 5px 1px green;
+}
+
+.notices {
+  text-align: center;
+}
+#card1,
+#card2,
+#card3,
+#card4 {
+  margin-top: 2%;
+  margin-left: 5%;
+  border-style: dashed;
+  border-color: green;
+}
+a {
+  color: black;
+  font-style: normal;
+}
+h1 {
+  color: green;
+}
+i{
+  color: green;
+}
