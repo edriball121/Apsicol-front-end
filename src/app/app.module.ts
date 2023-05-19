@@ -25,6 +25,12 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { RecoverPasswordComponent } from './components/auth/recover-password/recover-password.component';
 import { MaterialModule } from './modules/material.module';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+
 
 @NgModule({
   declarations: [
@@ -56,9 +62,18 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    //Jwt
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    JwtHelperService,
+    //Token interceptor
+    {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptorService, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

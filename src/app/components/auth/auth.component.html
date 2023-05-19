@@ -13,17 +13,27 @@
       <div class="row d-flex justify-content-center">
         <div class="col-8">
           <h2 class="fw-bold mb-5">Iniciar sesión</h2>
-          <form>
+          <form ngNativeValidate [formGroup]="formLogin" (ngSubmit)="login()">
             <!-- Email input -->
             <div class="form-outline mb-4">
               <label class="form-label">Usuario</label>
-              <input type="email" id="" class="form-control" required />
+              <input formControlName="document" type="number" class="form-control" required />
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
-              <label class="form-label" >Contraseña</label>
-              <input type="password" id="" class="form-control" required />
+              <label class="form-label">Contraseña</label>
+              <input formControlName="password" type="password"  class="form-control" required />
+            </div>
+
+            <div class="form-outline mb-4">
+              <label class="form-label">Tipo usuario</label>
+              <select class="form-select" formControlName="typeUser">
+                <option selected>Seleccionar...</option>
+                <option value="admin">Administrador</option>
+                <option value="consultant">Consultor</option>
+                <option value="farmer">Granjero</option>
+              </select>
             </div>
 
             <!-- Checkbox -->
@@ -35,7 +45,7 @@
             </div>
 
             <!-- Submit button -->
-            <button type="submit" class="btn btn-success btn-block mb-4">
+            <button type="submit" class="btn btn-success btn-block mb-4" (click)="login()">
               Iniciar sesión
             </button>
             <div class="text-center">
