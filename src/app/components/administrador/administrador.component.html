@@ -1,1 +1,45 @@
-<p>administrador works!</p>
+<!--h1 *ngIf="token() == 'admin'">modulo solo para admin</h1-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Administrador</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <button class="btn btn-success float-end">Agregar administrador</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE TARJETAS</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <td>Nombre</td>
+              <td>Tarjeta</td>
+              <td>Fecha expiracion</td>
+              <td>Acciones</td>
+            </tr>
+          </thead>
+          <tbody>
+            <!--tr *ngFor="let tarjetas of Tarjetas let iControl=index">
+              <td>{{tarjetas.titular}}</td>
+              <td>{{tarjetas.numeroTarjeta}}</td>
+              <td>{{tarjetas.fechaExpiracion}}</td>
+              <td>
+                <i class="far fa-solid fa-pen-to-square text-info" (click)="selectTarjeta(tarjetas)"></i>
+              </td>
+              <td>
+                <i (click)="deleteTarjeta(tarjetas.id,iControl)" class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr-->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
