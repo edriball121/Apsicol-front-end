@@ -3,12 +3,13 @@ import { FormGroup } from '@angular/forms'
 import { FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AdministradorService } from './../../services/administrador/administrador.service';
-import {GranjeroService } from './../../services/granjero/granjero.service';
+import { GranjeroService } from './../../services/granjero/granjero.service';
+import { ConsultorService } from './../../services/consultor/consultor.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: [ './auth.component.css' ]
+  styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
   //traer el formulario de login
@@ -19,11 +20,12 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private AdminService: AdministradorService,
     private FarmerService: GranjeroService,
+    private ConsultantService: ConsultorService,
   ) {
     this.formLogin = this.formulario.group({
-      document: [ '' ],
-      password: [ '' ],
-      typeUser: [ 'Seleccionar...' ]
+      document: [''],
+      password: [''],
+      typeUser: ['Seleccionar...']
     });
   }
 
@@ -38,14 +40,17 @@ export class AuthComponent implements OnInit {
       if (typeUser === 'admin') {
         this.AdminService.getLoginAdmin(document, password).subscribe((res: any) => {
           localStorage.setItem('token', res.token);
-          this.router.navigate([ 'admin' ]);
+          this.router.navigate(['admin']);
         });
       }
       if (typeUser === 'consultant') {
-        console.log('El login para consultor, aun esta en construccion');
+        this.ConsultantService.getLoginConsultant(document, password).subscribe((res: any) => {
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['landingPage']);
+        });
       }
       if (typeUser === 'farmer') {
-        this.FarmerService.getLoginFarmer(document,password).subscribe((res:any) =>{
+        this.FarmerService.getLoginFarmer(document, password).subscribe((res: any) => {
           localStorage.setItem('token', res.token);
           this.router.navigate(['landingPage']);
         });

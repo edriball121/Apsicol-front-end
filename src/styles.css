@@ -1,17 +1,16 @@
 /*Se importa el uso de bootstrap para todo el proyecto*/
 @import "~bootstrap/dist/css/bootstrap.css";
-/*@import "~bootstrap/dist/js/bootstrap.bundle.min.js";*/
 
 /*Fuente de Google*/
 body {
   font-family: "Josefin Sans", sans-serif;
-  /*background-image: url("./assets/img/wallpaper.jpg");*/
 }
 
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
