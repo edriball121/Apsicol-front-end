@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AdministradorService } from '../services/administrador/administrador.service';
+import { GranjeroService } from '../services/granjero/granjero.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -11,22 +12,23 @@ export class RoleGuard implements CanActivate {
 
   constructor(
     private AdminService: AdministradorService,
+    private FarmerService: GranjeroService,
     private route: Router,
   ) {
 
   }
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    const expectedRole = route.data[ 'expectedRole' ];
+    const expectedRole = route.data['expectedRole'];
     const token = localStorage.getItem('token');
     const decodedToken = this.decodeToken(token!);
-    const adm_rol = decodedToken.adm_rol; // Accede a la propiedad adm_rol del objeto decodificado
+    console.log(decodedToken);
+    const rol = decodedToken.rol;
 
-    if(!this.AdminService.isLogin() || adm_rol !== expectedRole){
+    if (!this.AdminService.isLogin() || rol !== expectedRole) {
       console.log('Usuario no autorizado para la vista');
-      this.route.navigate(['auth']);
+      this.route.navigate(['landingPage']);
       return false;
     }
-
     return true;
   }
 
