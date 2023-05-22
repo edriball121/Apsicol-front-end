@@ -15,15 +15,14 @@ const routes: Routes = [
   { path: 'landingPage', component: LandingPageComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'recoverPassword', component: RecoverPasswordComponent},
-  { path: 'admin', component: AdministradorComponent, canActivate:[AuthGuard]},
-//{ path: 'Admin', component: AdministradorComponent, data:{expectedRole: 'admin'} ,canActivate:[RoleGuard, AuthGuard]},
+  { path: 'recoverPassword', component: RecoverPasswordComponent },
+  { path: 'admin', component: AdministradorComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

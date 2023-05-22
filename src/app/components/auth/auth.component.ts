@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms'
 import { FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AdministradorService } from './../../services/administrador/administrador.service';
+import {GranjeroService } from './../../services/granjero/granjero.service';
 
 @Component({
   selector: 'app-auth',
@@ -17,6 +18,7 @@ export class AuthComponent implements OnInit {
     public formulario: FormBuilder,
     private router: Router,
     private AdminService: AdministradorService,
+    private FarmerService: GranjeroService,
   ) {
     this.formLogin = this.formulario.group({
       document: [ '' ],
@@ -43,7 +45,10 @@ export class AuthComponent implements OnInit {
         console.log('El login para consultor, aun esta en construccion');
       }
       if (typeUser === 'farmer') {
-        console.log('El login para granjero, aun esta en construccion');
+        this.FarmerService.getLoginFarmer(document,password).subscribe((res:any) =>{
+          localStorage.setItem('token', res.token);
+          this.router.navigate(['landingPage']);
+        });
       }
     } else {
       console.log('Debe diligenciar todos los datos del formulario');

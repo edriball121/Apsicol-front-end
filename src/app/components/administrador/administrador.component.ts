@@ -4,7 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
-  styleUrls: [ './administrador.component.css' ]
+  styleUrls: ['./administrador.component.css']
 })
 export class AdministradorComponent implements OnInit {
   constructor(
@@ -12,18 +12,18 @@ export class AdministradorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //console.log(this.token());
   }
-  /*token() {
+  token() {
     const token = localStorage.getItem('token');
     const decodedToken = this.decodeToken(token!);
-    const adm_rol = decodedToken.adm_rol;
-    return adm_rol;
+    const rol = decodedToken.rol;
+    console.log(rol);
+    return rol;
   }
   private decodeToken(token: string): any {
     const jwtHelper = new JwtHelperService();
     return jwtHelper.decodeToken(token);
-  }*/
+  }
 
 
 }
