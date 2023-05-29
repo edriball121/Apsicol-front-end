@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AdministradorService } from './../../services/administrador/administrador.service';
 import { GranjeroService } from './../../services/granjero/granjero.service';
 import { ConsultorService } from './../../services/consultor/consultor.service';
+import { VerifyToken} from './../../services/verify-token.service';
 
 @Component({
   selector: 'app-auth',
@@ -21,6 +22,7 @@ export class AuthComponent implements OnInit {
     private AdminService: AdministradorService,
     private FarmerService: GranjeroService,
     private ConsultantService: ConsultorService,
+    private verifyToken: VerifyToken
   ) {
     this.formLogin = this.formulario.group({
       document: [''],
@@ -40,18 +42,21 @@ export class AuthComponent implements OnInit {
       if (typeUser === 'admin') {
         this.AdminService.getLoginAdmin(document, password).subscribe((res: any) => {
           localStorage.setItem('token', res.token);
+          this.verifyToken.validarToken();
           this.router.navigate(['admin']);
         });
       }
       if (typeUser === 'consultant') {
         this.ConsultantService.getLoginConsultant(document, password).subscribe((res: any) => {
           localStorage.setItem('token', res.token);
+          this.verifyToken.validarToken();
           this.router.navigate(['landingPage']);
         });
       }
       if (typeUser === 'farmer') {
         this.FarmerService.getLoginFarmer(document, password).subscribe((res: any) => {
           localStorage.setItem('token', res.token);
+          this.verifyToken.validarToken();
           this.router.navigate(['landingPage']);
         });
       }
