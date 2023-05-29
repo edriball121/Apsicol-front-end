@@ -1,2 +1,9 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<div class="row">
+  <div class="col-2" *ngIf="estaLogueado">
+    <app-menubar></app-menubar>
+  </div>
+  <div [ngClass]="estaLogueado ? 'col-10' : 'col-12'">
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+  </div>
+</div>

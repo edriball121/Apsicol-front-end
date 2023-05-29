@@ -1,4 +1,3 @@
-<h1 *ngIf="token() == 'farmer'">modulo solo para admin</h1>
 <div class="container-fluid">
   <div class="row">
     <div class="card">
@@ -9,37 +8,146 @@
   </div>
   <div class="row">
     <div>
-      <button class="btn btn-success float-end">Agregar administrador</button>
+      <button class="btn" data-bs-toggle="collapse" href="#addAdmin" aria-expanded="false" aria-controls="addAdmin">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} ADMINISTRADOR</h5>
+      </button>
+      <div class="collapse" id="addAdmin">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <hr>
+              <form [formGroup]="form" (ngSubmit)="addAdmin()">
+                <!--Input de cedula-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-credit-card" [class.green-icon]="this.form.get('adm_cedula')?.valid"
+                      [class.red-icon]="this.form.get('adm_cedula')?.invalid && this.form.get('adm_cedula')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_cedula" minlength="8" maxlength="11" type="number" class="form-control"
+                    placeholder="Cedula">
+                </div>
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('adm_nombre')?.valid"
+                      [class.red-icon]="this.form.get('adm_nombre')?.invalid && this.form.get('adm_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_nombre" type="text" class="form-control" placeholder="Nombre">
+                </div>
+                <!--Input de apellidos-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('adm_apellido')?.valid"
+                      [class.red-icon]="this.form.get('adm_apellido')?.invalid && this.form.get('adm_apellido')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_apellido" type="text" class="form-control" placeholder="Apellidos">
+                </div>
+                <!--Input de password-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-key" [class.green-icon]="this.form.get('adm_password')?.valid"
+                      [class.red-icon]="this.form.get('adm_password')?.invalid && this.form.get('adm_password')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_password" type="password" class="form-control" placeholder="Contraseña">
+                </div>
+                <!--Input de telefono-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-phone-flip" [class.green-icon]="this.form.get('adm_telefono')?.valid"
+                      [class.red-icon]="this.form.get('adm_telefono')?.invalid && this.form.get('adm_telefono')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_telefono" minlength="8" maxlength="11" type="number" class="form-control"
+                    placeholder="Telefono">
+                </div>
+                <!--Input de email-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-at" [class.green-icon]="this.form.get('adm_email')?.valid"
+                      [class.red-icon]="this.form.get('adm_email')?.invalid && this.form.get('adm_email')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_email" type="email" class="form-control" placeholder="Correo electronico">
+                </div>
+                <!--Input de telefono-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-location-dot" [class.green-icon]="this.form.get('adm_direccion')?.valid"
+                      [class.red-icon]="this.form.get('adm_direccion')?.invalid && this.form.get('adm_direccion')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_direccion" type="text" class="form-control" placeholder="Dirección">
+                </div>
+                <!--Input de fecha nacimiento-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-calendar-check"
+                      [class.green-icon]="this.form.get('adm_fecha_nacimiento')?.valid"
+                      [class.red-icon]="this.form.get('adm_fecha_nacimiento')?.invalid && this.form.get('adm_fecha_nacimiento')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_fecha_nacimiento" type="date" class="form-control"
+                    placeholder="Fecha de nacimiento">
+                </div>
+                <!--Input rol-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-user-tie" [class.green-icon]="this.form.get('adm_rol')?.valid"
+                      [class.red-icon]="this.form.get('adm_rol')?.invalid && this.form.get('adm_rol')?.touched"></i>
+                  </span>
+                  <input formControlName="adm_rol" type="text" class="form-control" placeholder="Rol">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset();"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="card">
       <div class="card-body">
-        <h5 class="titulo">LISTADO DE TARJETAS</h5>
+        <h5 class="titulo">LISTADO DE ADMINISTRADORES</h5>
+        <hr>
         <table class="table">
           <thead>
             <tr>
-              <td>Nombre</td>
-              <td>Tarjeta</td>
-              <td>Fecha expiracion</td>
-              <td>Acciones</td>
+              <td><strong>Cedula</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Apellido</strong></td>
+              <td><strong>Telefono</strong></td>
+              <td><strong>Email</strong></td>
+              <td><strong>Dirección</strong></td>
+              <td><strong>Fecha nacimiento</strong></td>
+              <td><strong>Fecha creación</strong></td>
+              <td><strong>Rol</strong></td>
+              <td><strong>Acciones</strong></td>
             </tr>
           </thead>
           <tbody>
-            <!--tr *ngFor="let tarjetas of Tarjetas let iControl=index">
-              <td>{{tarjetas.titular}}</td>
-              <td>{{tarjetas.numeroTarjeta}}</td>
-              <td>{{tarjetas.fechaExpiracion}}</td>
+            <tr *ngFor="let Admins of Admins let iControl=index">
+              <td>{{Admins.adm_cedula}}</td>
+              <td>{{Admins.adm_nombre}}</td>
+              <td>{{Admins.adm_apellido}}</td>
+              <td>{{Admins.adm_telefono}}</td>
+              <td>{{Admins.adm_email}}</td>
+              <td>{{Admins.adm_direccion}}</td>
+              <td>{{Admins.adm_fecha_nacimiento}}</td>
+              <td>{{Admins.adm_fecha_creacion}}</td>
+              <td>{{Admins.adm_rol}}</td>
               <td>
-                <i class="far fa-solid fa-pen-to-square text-info" (click)="selectTarjeta(tarjetas)"></i>
+                <i (click)="selectAdmin(Admins)" class="far fa-solid fa-pen-to-square text-info"
+                  data-bs-toggle="collapse" href="#addAdmin">&nbsp;</i>
+                <i (click)="deleteAdmin(Admins.adm_cedula,iControl)" class="far fa-solid fa-trash text-danger"></i>
               </td>
-              <td>
-                <i (click)="deleteTarjeta(tarjetas.id,iControl)" class="far fa-solid fa-trash text-danger"></i>
-              </td>
-            </tr-->
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+
 </div>

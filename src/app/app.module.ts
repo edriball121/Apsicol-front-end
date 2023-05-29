@@ -30,7 +30,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { TokenInterceptorService } from './services/token-interceptor.service';
-
+import { ToastrModule } from 'ngx-toastr';
+import { VerifyToken } from './services/verify-token.service';
 
 @NgModule({
   declarations: [
@@ -65,15 +66,18 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     //Jwt
-    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
     //Token interceptor
-    {provide: HTTP_INTERCEPTORS, useClass:TokenInterceptorService, multi:true}
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+    //verificar token
+    VerifyToken
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

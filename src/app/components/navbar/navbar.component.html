@@ -18,9 +18,13 @@
           </a>
         </li>
         <li class="nav">
-          <a class="nav-item nav-link" routerLink="auth">
+          <a class="nav-item nav-link" routerLink="auth" *ngIf="!estaLogueado">
             <i class="fa-solid fa-user"></i>
-            <span> Ingresar</span>
+            <span>&nbsp;Ingresar</span>
+          </a>
+          <a class="nav-item nav-link" *ngIf="estaLogueado">
+            <i class="fa-solid fa-user"></i>
+            <span>&nbsp;{{ TituloAccion }}</span>
           </a>
         </li>
       </ul>
