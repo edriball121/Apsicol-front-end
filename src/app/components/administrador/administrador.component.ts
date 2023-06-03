@@ -50,6 +50,7 @@ export class AdministradorComponent implements OnInit {
     const fechaActualUtc: Date = new Date();
     const fechaFormateada: string = fechaActualUtc.toISOString().split('T')[ 0 ];
     const getRol = 'admin';
+    //capturar los valores del formulario
     const admins: any = {
       adm_cedula: this.form.get('adm_cedula')?.value.toString(),
       adm_nombre: this.form.get('adm_nombre')?.value,
@@ -78,7 +79,7 @@ export class AdministradorComponent implements OnInit {
       });
     } else {
       this.AdminService.editAdmin(this.adm_cedula, admins).subscribe(respuesta => {
-        this.TituloAccion = 'AGREGAR';
+        this.TituloAccion = 'agregar';
         this.form.reset();
         this.ngOnInit();
         this.adm_cedula = undefined;

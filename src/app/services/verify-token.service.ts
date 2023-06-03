@@ -18,11 +18,22 @@ export class VerifyToken {
   obtenerNombreUsuario(): string {
     const token = localStorage.getItem('token');
     const decodedToken = this.jwtHelper.decodeToken(token!);
-    const nombreUsuario = decodedToken.adm_nombre;
-    const apellidoUsuario = decodedToken.adm_apellido;
+    let nombreUsuario;
     const estaLogueado = !!token;
+//
+    if (decodedToken.adm_nombre) {
+      nombreUsuario = decodedToken.adm_nombre + ' ' + decodedToken.adm_apellido;
+    } else if (decodedToken.con_nombre) {
+      nombreUsuario = decodedToken.con_nombre + ' ' + decodedToken.con_apellido;
+    } else if (decodedToken.gra_nombre) {
+      nombreUsuario = decodedToken.gra_nombre + ' ' + decodedToken.gra_apellido;
+    } else {
+      // Lógica en caso de que no se encuentre ninguno de los prefijos esperados
+      nombreUsuario = 'Ingresar';
+    }
+
     this.estaLogueadoSubject.next(estaLogueado);
-    return nombreUsuario + ' ' + apellidoUsuario;
+    return nombreUsuario;
   }
   obtenerRol(): string {
     const token = localStorage.getItem('token');

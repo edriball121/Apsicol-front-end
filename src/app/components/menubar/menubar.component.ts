@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class MenubarComponent implements OnInit {
   estaLogueado!: boolean
-  mostrarMenu: boolean = false;
+  mostrarMenuAdmin: boolean = false;
+  mostrarMenuConsultor: boolean = false;
   constructor(
     private verifyToken: VerifyToken,
     private router: Router
@@ -23,8 +24,14 @@ export class MenubarComponent implements OnInit {
   }
   getRol(): void {
     const rol = this.verifyToken.obtenerRol();
-    this.mostrarMenu = rol === 'admin';
-    console.log('Rol:', rol);
+    if (rol === 'admin') {
+      this.mostrarMenuAdmin = rol === 'admin';
+      console.log('Rol:', rol);
+    } else if (rol === 'consultant') {
+      this.mostrarMenuConsultor = rol === 'consultant';
+      console.log('Rol:', rol);
+    }
+
   }
   cerrarSesion(): void {
     this.verifyToken.destruirToken();

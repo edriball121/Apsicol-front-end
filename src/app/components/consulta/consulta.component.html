@@ -1,4 +1,147 @@
 <div class="container-fluid">
-  <p>consulta works!</p>
-</div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">CONSULTAS</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <button class="btn" data-bs-toggle="collapse" href="#addConsultation" aria-expanded="false"
+        aria-controls="addConsultation">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} CONSULTA</h5>
+      </button>
+      <div class="collapse" id="addConsultation">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addConsultation()">
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <input formControlName="con_radicado" type="text" class="form-control" placeholder="" hidden>
+                </div>
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('con_nombre')?.valid"
+                      [class.red-icon]="this.form.get('con_nombre')?.invalid && this.form.get('con_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="con_nombre" type="text" class="form-control" placeholder="Nombre">
+                </div>
+                <!--Input de ripo consulta-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-list-check" [class.green-icon]="this.form.get('con_tipo_consulta')?.valid"
+                      [class.red-icon]="this.form.get('con_tipo_consulta')?.invalid && this.form.get('con_tipo_consulta')?.touched"></i>
+                  </span>
+                  <select class="form-select" formControlName="con_tipo_consulta">
+                    <option value="" disabled selected hidden>Seleccionar...</option>
+                    <option value="agricola">Agrícola</option>
+                    <option value="pecuario">Pecuario</option>
+                    <option value="falla_sistema">Fallo del sistema</option>
+                    <option value="general">General</option>
+                  </select>
+                </div>
+                <!--Input de descripcion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-circle-info" [class.green-icon]="this.form.get('con_descripcion')?.valid"
+                      [class.red-icon]="this.form.get('con_descripcion')?.invalid && this.form.get('con_descripcion')?.touched"></i>
+                  </span>
+                  <textarea formControlName="con_descripcion" type="text" class="form-control" placeholder="Descripción" rows="10"></textarea>
+                </div>
+                <!--Input de estado-->
+                <div class="input-group input-group-lg mb-3" *ngIf="rol != 'farmer'">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-file-circle-check" [class.green-icon]="this.form.get('con_estado')?.valid"
+                      [class.red-icon]="this.form.get('con_estado')?.invalid && this.form.get('con_estado')?.touched"></i>
+                  </span>
+                  <select class="form-select" formControlName="con_estado">
+                    <option value="" disabled selected hidden>Seleccionar...</option>
+                    <option value="abierto">Abierto</option>
+                    <option value="cerrado">Cerrado</option>
+                  </select>
+                </div>
+                <!--Input de calificacion-->
+                <div class="input-group input-group-lg mb-3" *ngIf="rol != 'farmer'">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-check" [class.green-icon]="this.form.get('con_calificacion')?.valid"
+                      [class.red-icon]="this.form.get('con_calificacion')?.invalid && this.form.get('con_calificacion')?.touched"></i>
+                  </span>
+                  <select class="form-select" formControlName="con_calificacion">
+                    <option value="" disabled selected hidden>Seleccionar...</option>
+                    <option value="excelente">Excelente</option>
+                    <option value="bueno">Bueno</option>
+                    <option value="regular">Regular</option>
+                    <option value="malo">Malo</option>
+                  </select>
+                </div>
+                <!--Input de fecha finalización-->
+                <div class="input-group input-group-lg mb-3" *ngIf="rol != 'farmer'">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-calendar-check"
+                      [class.green-icon]="this.form.get('con_fecha_finalizacion')?.valid"
+                      [class.red-icon]="this.form.get('con_fecha_finalizacion')?.invalid && this.form.get('con_fecha_finalizacion')?.touched"></i>
+                  </span>
+                  <input formControlName="con_fecha_finalizacion" type="date" class="form-control"
+                    placeholder="Fecha de nacimiento">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset();"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE CONSULTAS</h5>
+        <hr>
+        <table class="table">
+          <thead>
+            <tr>
+              <td><strong>Radicado</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Tipo Consulta</strong></td>
+              <td><strong>Descripción</strong></td>
+              <td><strong>Fecha</strong></td>
+              <td><strong>Estado</strong></td>
+              <td><strong>Calificación</strong></td>
+              <td><strong>Fecha finalización</strong></td>
+              <td><strong>Usuario Agricultor</strong></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Consultations of Consultations let iControl=index">
+              <td>{{Consultations.con_radicado}}</td>
+              <td>{{Consultations.con_nombre}}</td>
+              <td>{{Consultations.con_tipo_consulta}}</td>
+              <td>{{Consultations.con_descripcion}}</td>
+              <td>{{Consultations.con_fecha}}</td>
+              <td>{{Consultations.con_estado}}</td>
+              <td>{{Consultations.con_calificacion}}</td>
+              <td>{{Consultations.con_fecha_finalizacion}}</td>
+              <td>{{Consultations.FK_con_gra_cedula}}</td>
+              <td>
+                <i (click)="selectConsultation(Consultations)" class="far fa-solid fa-pen-to-square text-info"
+                  data-bs-toggle="collapse" href="#addConsultation">&nbsp;</i>
+                <i (click)="deleteConsultation(Consultations.con_radicado,iControl)"
+                  class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
+</div>
