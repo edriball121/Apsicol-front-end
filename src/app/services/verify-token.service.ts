@@ -20,7 +20,6 @@ export class VerifyToken {
     const decodedToken = this.jwtHelper.decodeToken(token!);
     let nombreUsuario;
     const estaLogueado = !!token;
-//
     if (decodedToken.adm_nombre) {
       nombreUsuario = decodedToken.adm_nombre + ' ' + decodedToken.adm_apellido;
     } else if (decodedToken.con_nombre) {
@@ -31,7 +30,6 @@ export class VerifyToken {
       // Lógica en caso de que no se encuentre ninguno de los prefijos esperados
       nombreUsuario = 'Ingresar';
     }
-
     this.estaLogueadoSubject.next(estaLogueado);
     return nombreUsuario;
   }

@@ -15,6 +15,7 @@ export class ConsultaComponent implements OnInit {
   Consultations: any;
   TituloAccion = 'Agregar';
   con_radicado: number | undefined;
+
   rol!: string;
   constructor(
     private fb: FormBuilder,
@@ -24,6 +25,10 @@ export class ConsultaComponent implements OnInit {
   ) {
     //restricciones del formulario
     this.form = this.fb.group({
+      con_radicado: [''],
+      con_estado: [''],
+      con_calificacion: [''],
+      con_fecha_finalizacion:[''],
       con_nombre: [ '', Validators.required ],
       con_tipo_consulta: [ '', Validators.required ],
       con_descripcion: [ '', Validators.required ],
@@ -32,9 +37,8 @@ export class ConsultaComponent implements OnInit {
 
   ngOnInit(): void {
     //listar consultas
-    this.ConsultaService.getConsultarion().subscribe(respuesta => {
+    this.ConsultaService.getConsultation().subscribe(respuesta => {
       this.Consultations = respuesta;
-
     });
     //verificar rol
     this.rol = this.verifyToken.obtenerRol();
@@ -62,7 +66,6 @@ export class ConsultaComponent implements OnInit {
     }
     if (this.con_radicado == undefined) {
       consults.con_radicado = 0;
-      console.log(consults);
       this.ConsultaService.addConsultation(consults).subscribe(respuesta => {
         try {
           this.ngOnInit();
@@ -77,20 +80,20 @@ export class ConsultaComponent implements OnInit {
           console.log(error);
         }
       })
-    }else{
+    } else {
       consults.con_radicado = this.form.get('con_radicado')?.value,
-      this.ConsultaService.editConsultation(this.con_radicado, consults).subscribe(respuesta=>{
-        this.TituloAccion = 'agregar';
-        this.form.reset();
-        this.ngOnInit();
-        this.con_radicado = undefined;
-        this.toastr.success('Se edito la consulta correctamente', 'Mensaje', {
-          positionClass: 'toast-top-center',
-          closeButton: true,
-          timeOut: 5000,
-          progressBar: true
-        });
-      })
+        this.ConsultaService.editConsultation(this.con_radicado, consults).subscribe(respuesta => {
+          this.TituloAccion = 'agregar';
+          this.form.reset();
+          this.ngOnInit();
+          this.con_radicado = undefined;
+          this.toastr.success('Se edito la consulta correctamente', 'Mensaje', {
+            positionClass: 'toast-top-center',
+            closeButton: true,
+            timeOut: 5000,
+            progressBar: true
+          });
+        })
     }
 
 
@@ -118,6 +121,7 @@ export class ConsultaComponent implements OnInit {
   }
   deleteConsultation(con_radicado: any, iControl: any) {
     if (window.confirm('¿Esta seguro que desea borrar el registro?')) {
+      this.ngOnInit();
       this.ConsultaService.deleteConsultation(con_radicado).subscribe((respuesta) => {
         this.Consultations.splice(iControl, 1);
         this.toastr.error('Se elimino el registro correctamente', 'Mensaje', {
@@ -126,8 +130,7 @@ export class ConsultaComponent implements OnInit {
           timeOut: 5000,
           progressBar: true
         });
-        console.log(respuesta);
-      })
+      });
     }
   }
 }

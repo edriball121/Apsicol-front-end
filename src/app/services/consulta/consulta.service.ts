@@ -15,7 +15,7 @@ export class ConsultaService {
     private jwtHelper: JwtHelperService,
   ) { }
   //Obtener todas las consultas
-  getConsultarion() {
+  getConsultation() {
     return this.http.get(this.BASEAPI + this.CONSULTATIONAPI)
   }
   //Obtener 1 consulta
