@@ -29,7 +29,6 @@ export class MenubarComponent implements OnInit {
       console.log('Rol:', rol);
     } else if (rol === 'consultant') {
       this.mostrarMenuConsultor = rol === 'consultant';
-      console.log('Rol:', rol);
     }
 
   }

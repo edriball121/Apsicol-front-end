@@ -37,7 +37,6 @@ export class AuthComponent implements OnInit {
     const document = this.formLogin.get('document')?.value;
     const password = this.formLogin.get('password')?.value;
     const typeUser = this.formLogin.get('typeUser')?.value;
-    console.log(typeUser);
     if (document != '' && password !== '') {
       if (typeUser === 'admin') {
         this.AdminService.getLoginAdmin(document, password).subscribe((res: any) => {
