@@ -17,14 +17,14 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recoverPassword', component: RecoverPasswordComponent },
-  { path: 'admin', component: AdministradorComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
-  { path: 'consult', component: ConsultaComponent, data: { expectedRole: ['consultant', 'admin', 'farmer'] }, canActivate: [RoleGuard, AuthGuard] },
+  { path: 'admin', component: AdministradorComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
+  { path: 'consult', component: ConsultaComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule { }
