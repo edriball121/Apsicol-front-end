@@ -25,10 +25,10 @@ export class ConsultaComponent implements OnInit {
   ) {
     //restricciones del formulario
     this.form = this.fb.group({
-      con_radicado: [''],
-      con_estado: [''],
-      con_calificacion: [''],
-      con_fecha_finalizacion:[''],
+      con_radicado: [ '' ],
+      con_estado: [ '' ],
+      con_calificacion: [ '' ],
+      con_fecha_finalizacion: [ '' ],
       con_nombre: [ '', Validators.required ],
       con_tipo_consulta: [ '', Validators.required ],
       con_descripcion: [ '', Validators.required ],
@@ -36,21 +36,27 @@ export class ConsultaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //listar consultas
-    this.ConsultaService.getConsultation().subscribe(respuesta => {
-      this.Consultations = respuesta;
-    });
     //verificar rol
     this.rol = this.verifyToken.obtenerRol();
+    if (this.rol == 'admin' || this.rol == 'consultant') {
+      //listar consultas
+      this.ConsultaService.getConsultation().subscribe(respuesta => {
+        this.Consultations = respuesta;
+      });
+    } else {
+      this.ConsultaService.getConsultUser(this.verifyToken.obtenerCedulaUsuario()).subscribe(respuesta => {
+        this.Consultations = respuesta;
+      })
+    }
   }
   //agregar consulta
   addConsultation() {
     //agregar y formatear fecha del sistema
     const fechaActualUtc: Date = new Date();
     const fechaFormateada: string = fechaActualUtc.toISOString().split('T')[ 0 ];
-    //asignación temporal de la cedula del granjero, se debe cambiar
-    //al implementar el modulo de granjero
-    const FK_con_gra_cedula = '1057758133';
+    //obtener cedula para asignarlo a la consulta que genere el usuario
+
+    const FK_con_gra_cedula = this.verifyToken.obtenerCedulaUsuario();
     const calificacion = 'Pendiente';
     const estado = 'Abierto';
     //capturar los valores del formulario

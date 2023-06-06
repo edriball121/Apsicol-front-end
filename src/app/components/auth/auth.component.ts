@@ -56,7 +56,7 @@ export class AuthComponent implements OnInit {
         this.FarmerService.getLoginFarmer(document, password).subscribe((res: any) => {
           localStorage.setItem('token', res.token);
           this.verifyToken.validarToken();
-          this.router.navigate(['landingPage']);
+          this.router.navigate(['consult']);
         });
       }
     } else {

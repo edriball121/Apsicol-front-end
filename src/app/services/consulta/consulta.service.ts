@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,9 +9,9 @@ export class ConsultaService {
   //url API base
   BASEAPI: string = 'http://localhost:3000/api/v1/';
   CONSULTATIONAPI: string = 'consultation/';
+  DOCUMENTAPI: String = 'document/'
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelperService,
   ) { }
   //Obtener todas las consultas
   getConsultation() {
@@ -21,6 +20,10 @@ export class ConsultaService {
   //Obtener 1 consulta
   getOneConsultation(con_radicado: any) {
     return this.http.get(this.BASEAPI + this.CONSULTATIONAPI + con_radicado);
+  }
+  //Obtener consultas de un usuario
+  getConsultUser(fk_con_gra_cedula: any) {
+    return this.http.get(this.BASEAPI + this.CONSULTATIONAPI +this.DOCUMENTAPI+ fk_con_gra_cedula);
   }
   //Agregar consulta
   addConsultation(consultation: any): Observable<any>{

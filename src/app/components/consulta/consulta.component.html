@@ -49,7 +49,8 @@
                     <i class="fa-solid fa-circle-info" [class.green-icon]="this.form.get('con_descripcion')?.valid"
                       [class.red-icon]="this.form.get('con_descripcion')?.invalid && this.form.get('con_descripcion')?.touched"></i>
                   </span>
-                  <textarea formControlName="con_descripcion" type="text" class="form-control" placeholder="Descripción" rows="10"></textarea>
+                  <textarea formControlName="con_descripcion" type="text" class="form-control" placeholder="Descripción"
+                    rows="10"></textarea>
                 </div>
                 <!--Input de estado-->
                 <div class="input-group input-group-lg mb-3" *ngIf="rol != 'farmer'">
@@ -101,7 +102,49 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="rol == 'consultant' || rol == 'admin'">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE CONSULTAS</h5>
+        <hr>
+        <table class="table">
+          <thead>
+            <tr>
+              <td><strong>Radicado</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Tipo Consulta</strong></td>
+              <td><strong>Descripción</strong></td>
+              <td><strong>Fecha</strong></td>
+              <td><strong>Estado</strong></td>
+              <td><strong>Calificación</strong></td>
+              <td><strong>Fecha finalización</strong></td>
+              <td><strong>Usuario Agricultor</strong></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Consultations of Consultations let iControl=index">
+              <td>{{Consultations.con_radicado}}</td>
+              <td>{{Consultations.con_nombre}}</td>
+              <td>{{Consultations.con_tipo_consulta}}</td>
+              <td>{{Consultations.con_descripcion}}</td>
+              <td>{{Consultations.con_fecha}}</td>
+              <td>{{Consultations.con_estado}}</td>
+              <td>{{Consultations.con_calificacion}}</td>
+              <td>{{Consultations.con_fecha_finalizacion}}</td>
+              <td>{{Consultations.FK_con_gra_cedula}}</td>
+              <td>
+                <i (click)="selectConsultation(Consultations)" class="far fa-solid fa-pen-to-square text-info"
+                  data-bs-toggle="collapse" href="#addConsultation">&nbsp;</i>
+                <i (click)="deleteConsultation(Consultations.con_radicado,iControl)"
+                  class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol == 'farmer'">
     <div class="card">
       <div class="card-body">
         <h5 class="titulo">LISTADO DE CONSULTAS</h5>

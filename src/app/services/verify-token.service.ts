@@ -32,6 +32,22 @@ export class VerifyToken {
     }
     this.estaLogueadoSubject.next(estaLogueado);
     return nombreUsuario;
+
+  }
+  obtenerCedulaUsuario():string{
+    const token = localStorage.getItem('token');
+    const decodedToken = this.jwtHelper.decodeToken(token!);
+    let cedulaUsuario;
+    const estaLogueado = !!token;
+    if(decodedToken.adm_cedula){
+      cedulaUsuario = decodedToken.adm_cedula;
+    }else if(decodedToken.con_cedula){
+      cedulaUsuario = decodedToken.con_cedula;
+    }else if(decodedToken.gra_cedula){
+      cedulaUsuario = decodedToken.gra_cedula;
+    }
+    this.estaLogueadoSubject.next(estaLogueado);
+    return cedulaUsuario;
   }
   obtenerRol(): string {
     const token = localStorage.getItem('token');
