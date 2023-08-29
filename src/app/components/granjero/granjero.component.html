@@ -1,1 +1,155 @@
-<p>granjero works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Granjero</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <button class="btn" data-bs-toggle="collapse" href="#addFarmer" aria-expanded="false" aria-controls="addFarmer">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} GRANJERO</h5>
+      </button>
+      <div class="collapse" id="addFarmer">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addFarmer()">
+                <!--Input de cedula-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-credit-card" [class.green-icon]="this.form.get('gra_cedula')?.valid"
+                      [class.red-icon]="this.form.get('gra_cedula')?.invalid && this.form.get('gra_cedula')?.touched"></i>
+                  </span>
+                  <input formControlName="gra_cedula" minlength="8" maxlength="11" type="number" class="form-control"
+                    placeholder="Cedula">
+                </div>
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('gra_nombre')?.valid"
+                      [class.red-icon]="this.form.get('gra_nombre')?.invalid && this.form.get('gra_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="gra_nombre" type="text" class="form-control" placeholder="Nombre">
+                </div>
+                <!--Input de apellidos-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('gra_apellido')?.valid"
+                      [class.red-icon]="this.form.get('gra_apellido')?.invalid && this.form.get('gra_apellido')?.touched"></i>
+                  </span>
+                  <input formControlName="gra_apellido" type="text" class="form-control" placeholder="Apellidos">
+                </div>
+                <!--Input de password-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-key" [class.green-icon]="this.form.get('gra_password')?.valid"
+                      [class.red-icon]="this.form.get('gra_password')?.invalid && this.form.get('gra_password')?.touched"></i>
+                  </span>
+                  <input formControlName="gra_password" type="password" class="form-control" placeholder="Contraseña">
+                </div>
+                <!--Input de telefono-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-phone-flip" [class.green-icon]="this.form.get('gra_telefono')?.valid"
+                      [class.red-icon]="this.form.get('gra_telefono')?.invalid && this.form.get('gra_telefono')?.touched"></i>
+                  </span>
+                  <input formControlName="gra_telefono" minlength="8" maxlength="11" type="number" class="form-control"
+                    placeholder="Telefono">
+                </div>
+                <!--Input de email-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-at" [class.green-icon]="this.form.get('gra_email')?.valid"
+                      [class.red-icon]="this.form.get('gra_email')?.invalid && this.form.get('gra_email')?.touched"></i>
+                  </span>
+                  <input formControlName="gra_email" type="email" class="form-control" placeholder="Correo electronico">
+                </div>
+                <!--Input de telefono-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-location-dot" [class.green-icon]="this.form.get('gra_direccion')?.valid"
+                      [class.red-icon]="this.form.get('gra_direccion')?.invalid && this.form.get('gra_direccion')?.touched"></i>
+                  </span>
+                  <input formControlName="gra_direccion" type="text" class="form-control" placeholder="Dirección">
+                </div>
+                <!--Input de fecha nacimiento-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-calendar-check"
+                      [class.green-icon]="this.form.get('gra_fecha_nacimiento')?.valid"
+                      [class.red-icon]="this.form.get('gra_fecha_nacimiento')?.invalid && this.form.get('gra_fecha_nacimiento')?.touched"></i>
+                  </span>
+                  <input formControlName="gra_fecha_nacimiento" type="date" class="form-control"
+                    placeholder="Fecha de nacimiento">
+                </div>
+                <!--Perfil laboral-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-calendar-check"
+                      [class.green-icon]="this.form.get('gra_perfil_laboral')?.valid"
+                      [class.red-icon]="this.form.get('gra_perfil_laboral')?.invalid && this.form.get('gra_perfil_laboral')?.touched"></i>
+                  </span>
+                  <textarea formControlName="gra_perfil_laboral" type="text" class="form-control"
+                    placeholder="Perfil laboral" rows="10"></textarea>
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset();"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="titulo">LISTADO DE GRANJEROS</h5>
+      <hr>
+      <table class="table">
+        <thead>
+          <tr>
+            <td><strong>Cedula</strong></td>
+            <td><strong>Nombre</strong></td>
+            <td><strong>Apellido</strong></td>
+            <td><strong>Telefono</strong></td>
+            <td><strong>Email</strong></td>
+            <td><strong>Dirección</strong></td>
+            <td><strong>Fecha nacimiento</strong></td>
+            <td><strong>Fecha creación</strong></td>
+            <td><strong>Perfil laboral</strong></td>
+            <td><strong>Rol</strong></td>
+            <td><strong>Acciones</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let Farmers of Farmers let iControl=index">
+            <td>{{Farmers.gra_cedula}}</td>
+            <td>{{Farmers.gra_nombre}}</td>
+            <td>{{Farmers.gra_apellido}}</td>
+            <td>{{Farmers.gra_telefono}}</td>
+            <td>{{Farmers.gra_email}}</td>
+            <td>{{Farmers.gra_direccion}}</td>
+            <td>{{Farmers.gra_fecha_nacimiento}}</td>
+            <td>{{Farmers.gra_fecha_creacion}}</td>
+            <td>{{Farmers.gra_perfil_laboral}}</td>
+            <td>{{Farmers.rol}}</td>
+            <td>
+              <i (click)="selectFarmer(Farmers)" class="far fa-solid fa-pen-to-square text-info"
+                data-bs-toggle="collapse" href="#addAdmin">&nbsp;</i>
+              <i (click)="deleteFarmer(Farmers.gra_cedula,iControl)" class="far fa-solid fa-trash text-danger"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

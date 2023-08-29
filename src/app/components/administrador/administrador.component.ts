@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AdministradorService } from './../../services/administrador/administrador.service';
 import { ToastrService } from 'ngx-toastr';
-import { VerifyToken } from './../../services/verify-token.service'
+import { VerifyToken } from './../../services/verify-token.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
@@ -116,17 +117,31 @@ export class AdministradorComponent implements OnInit {
   }
   //eliminar admin
   deleteAdmin(adm_cedula: any, iControl: any) {
-    if (window.confirm('¿Esta seguro que desea borrar el registro?')) {
-      this.AdminService.deleteAdmin(adm_cedula).subscribe((respuesta) => {
-        this.Admins.splice(iControl, 1);
-        this.toastr.error('Se elimino el registro correctamente', 'Mensaje', {
-          positionClass: 'toast-top-center',
-          closeButton: true,
-          timeOut: 5000,
-          progressBar: true
-        });
-        console.log(respuesta);
-      });
-    }
+    Swal.fire({
+      title: '¿Estas seguro que deseas eliminar el registro?',
+      text: "Si eliminas el registro no podras recuperarlo",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Lo quiero eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.AdminService.deleteAdmin(adm_cedula).subscribe((respuesta) => {
+          this.Admins.splice(iControl, 1);
+          this.toastr.error('Se elimino el registro correctamente', 'Mensaje', {
+            positionClass: 'toast-top-center',
+            closeButton: true,
+            timeOut: 5000,
+            progressBar: true
+          });
+        })
+        Swal.fire(
+          'Eliminado!',
+          'Tu registro ha sido borrado exitosamente!',
+          'success'
+        )
+      }
+    });//fin Swal
   }
 }
