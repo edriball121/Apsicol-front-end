@@ -43,6 +43,7 @@ export class GranjeroComponent implements OnInit {
     //listar granjeros
     this.FarmerService.getFarmer().subscribe(respuesta => {
       this.Farmers = respuesta;
+      console.log(this.Farmers);
     });
     //verificar rol
     this.rol = this.verifyToken.obtenerRol();
@@ -72,7 +73,6 @@ export class GranjeroComponent implements OnInit {
       Farmers.gra_cedula == undefined;
       //Agregar granjero
       this.FarmerService.addFarmer(Farmers).subscribe(respuesta => {
-        this.ngOnInit();
         this.form.reset();
         this.toastr.success('Se agrego el Granjero correctamente', 'Mensaje', {
           positionClass: 'toast-top-center',
@@ -80,6 +80,7 @@ export class GranjeroComponent implements OnInit {
           timeOut: 5000,
           progressBar: true
         });
+
       });
     } else {
       this.FarmerService.editFarmer(this.gra_cedula, Farmers).subscribe(respuesta => {

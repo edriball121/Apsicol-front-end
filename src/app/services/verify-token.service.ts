@@ -54,7 +54,7 @@ export class VerifyToken {
     const decodedToken = this.jwtHelper.decodeToken(token!);
     const estaLogueado = !!token;
     this.estaLogueadoSubject.next(estaLogueado);
-    const rol = decodedToken.rol;
+    const rol = decodedToken?.rol??"undefinied";
     return rol;
   }
   destruirToken(): void {
