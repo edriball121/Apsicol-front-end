@@ -145,6 +145,6 @@ export class GranjeroComponent implements OnInit {
           'success'
         )
       }
-    })
+    });//fin Swal
   }
 }
