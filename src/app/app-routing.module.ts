@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'admin', component: AdministradorComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'consult', component: ConsultaComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'farmer', component: GranjeroComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
-  { path: 'news', component: NoticiasComponent },
+  { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
