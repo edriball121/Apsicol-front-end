@@ -79,6 +79,11 @@ export class GranjeroComponent implements OnInit {
           timeOut: 5000,
           progressBar: true
         });
+      Swal.fire(
+        'Agregado!',
+        'Tu usuario ha sido registrado exitosamente!',
+        'success'
+      )
 
       });
     } else {
