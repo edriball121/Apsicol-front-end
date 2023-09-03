@@ -18,9 +18,9 @@ export class AppComponent implements OnInit {
     this.verifyToken.validarToken();
 
     //Evento que elimina el token si se cierra el navegador
-    window.addEventListener('beforeunload', () => {
+    /*window.addEventListener('beforeunload', () => {
       // Eliminar el token del localStorage
       localStorage.removeItem('token');
-    });
+    });*/
   }
 }
