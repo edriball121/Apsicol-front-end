@@ -60,51 +60,16 @@
 <!-- Fin Carousel -->
 <hr>
 <!-- Noticias -->
-<div class="notices col-12">
-  <h1 class="h1 fw-bold">Noticias</h1>
+<div class="col-12">
+  <h1 class="h1 fw-bold text-center">Noticias</h1>
+  <hr>
   <div class="row">
-    <div class="col-6">
-      <img src="./../../../assets/img/langind-page/estilo-vida.jpg" alt="Estilo de vida" class="d-block w-100">
-    </div>
-    <div class="col-6">
-      <div class="row">
-        <!-- card 1 -->
-        <div class="card col-5" id="card1">
-          <img class="card-img-top" src="./../../../assets/img/langind-page/noticia.jpg" alt="Title">
-          <div class="card-body">
-            <h4 class="card-title">Noticia</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quas quisquam iste a
-              recusandae ab laboriosam</p>
-          </div>
-        </div>
-        <!-- card 2 -->
-        <div class="card col-5" id="card2">
-          <img class="card-img-top" src="./../../../assets/img/langind-page/noticia.jpg" alt="Title">
-          <div class="card-body">
-            <h4 class="card-title">Noticia</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quas quisquam iste a
-              recusandae ab laboriosam</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <!-- card 3 -->
-        <div class="card col-5" id="card2">
-          <img class="card-img-top" src="./../../../assets/img/langind-page/noticia.jpg" alt="Title">
-          <div class="card-body">
-            <h4 class="card-title">Noticia</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quas quisquam iste a
-              recusandae ab laboriosam</p>
-          </div>
-        </div>
-        <!-- card 4 -->
-        <div class="card col-5" id="card4">
-          <img class="card-img-top" src="./../../../assets/img/langind-page/noticia.jpg" alt="Title">
-          <div class="card-body">
-            <h4 class="card-title">Noticia</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quas quisquam iste a
-              recusandae ab laboriosam</p>
-          </div>
+    <div class="col-3" *ngFor="let TopNews of TopNews let iControl=index">
+      <div class="card" id="cards">
+        <img class="card-img-top" src="{{TopNews.not_foto}}" alt="Title" width="200" height="450">
+        <div class="card-body">
+          <h4 class="card-title">{{TopNews.not_nombre}}</h4>
+          <p class="card-text">{{TopNews.not_descripcion}}</p>
         </div>
       </div>
     </div>

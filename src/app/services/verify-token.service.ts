@@ -19,7 +19,7 @@ export class VerifyToken {
     const token = localStorage.getItem('token');
     const decodedToken = this.jwtHelper.decodeToken(token!);
     let nombreUsuario;
-    const estaLogueado = !!token;
+    //const estaLogueado = !!token;
     if (decodedToken.adm_nombre) {
       nombreUsuario = decodedToken.adm_nombre + ' ' + decodedToken.adm_apellido;
     } else if (decodedToken.con_nombre) {
@@ -30,7 +30,7 @@ export class VerifyToken {
       // Lógica en caso de que no se encuentre ninguno de los prefijos esperados
       nombreUsuario = 'Ingresar';
     }
-    this.estaLogueadoSubject.next(estaLogueado);
+    //this.estaLogueadoSubject.next(estaLogueado);
     return nombreUsuario;
 
   }
@@ -38,7 +38,7 @@ export class VerifyToken {
     const token = localStorage.getItem('token');
     const decodedToken = this.jwtHelper.decodeToken(token!);
     let cedulaUsuario;
-    const estaLogueado = !!token;
+    //const estaLogueado = !!token;
     if(decodedToken.adm_cedula){
       cedulaUsuario = decodedToken.adm_cedula;
     }else if(decodedToken.con_cedula){
@@ -46,14 +46,14 @@ export class VerifyToken {
     }else if(decodedToken.gra_cedula){
       cedulaUsuario = decodedToken.gra_cedula;
     }
-    this.estaLogueadoSubject.next(estaLogueado);
+    //this.estaLogueadoSubject.next(estaLogueado);
     return cedulaUsuario;
   }
   obtenerRol(): string {
     const token = localStorage.getItem('token');
     const decodedToken = this.jwtHelper.decodeToken(token!);
-    const estaLogueado = !!token;
-    this.estaLogueadoSubject.next(estaLogueado);
+    //const estaLogueado = !!token;
+    //this.estaLogueadoSubject.next(estaLogueado);
     const rol = decodedToken?.rol??"undefinied";
     return rol;
   }

@@ -1,1 +1,121 @@
-<p>noticias works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Noticias</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <button class="btn" data-bs-toggle="collapse" href="#addNews" aria-expanded="false" aria-controls="addNews">
+          <h5 class="font-weight-bold">{{TituloAccion | uppercase}} NOTICIAS</h5>
+        </button>
+        <div class="collapse" id="addNews">
+          <div class="row">
+            <div class="card">
+              <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="addNews()">
+                  <!--Input de nombre-->
+                  <div class="input-group input-group-lg mb-3">
+                    <span class="input-group-text">
+                      <i class="fa-solid fa-heading" [class.green-icon]="this.form.get('not_nombre')?.valid"
+                        [class.red-icon]="this.form.get('not_nombre')?.invalid && this.form.get('not_nombre')?.touched"></i>
+                    </span>
+                    <input formControlName="not_nombre" type="text" class="form-control"
+                      placeholder="Titulo de la noticia">
+                  </div>
+                  <!--Input de sub titulo-->
+                  <div class="input-group input-group-lg mb-3">
+                    <span class="input-group-text">
+                      <i class="fa-solid fa-italic" [class.green-icon]="this.form.get('not_subtitulo')?.valid"
+                        [class.red-icon]="this.form.get('not_subtitulo')?.invalid && this.form.get('not_subtitulo')?.touched"></i>
+                    </span>
+                    <input formControlName="not_subtitulo" type="text" class="form-control"
+                      placeholder="Subtitulo de la noticia">
+                  </div>
+                  <!--Input de descripcion-->
+                  <div class="input-group input-group-lg mb-3">
+                    <span class="input-group-text">
+                      <i class="fa-solid fa-font" [class.green-icon]="this.form.get('not_descripcion')?.valid"
+                        [class.red-icon]="this.form.get('not_descripcion')?.invalid && this.form.get('not_descripcion')?.touched"></i>
+                    </span>
+                    <textarea formControlName="not_descripcion" type="text" class="form-control"
+                      placeholder="Descripción de la noticia" rows="10"></textarea>
+                  </div>
+                  <!--Input de URL-->
+                  <div class="input-group input-group-lg mb-3">
+                    <span class="input-group-text">
+                      <i class="fa-solid fa-link" [class.green-icon]="this.form.get('not_url')?.valid"
+                        [class.red-icon]="this.form.get('not_url')?.invalid && this.form.get('not_url')?.touched"></i>
+                    </span>
+                    <input formControlName="not_url" type="text" class="form-control"
+                      placeholder="Url - fuente de la noticia">
+                  </div>
+                  <!--Input de foto-->
+                  <strong>Nota</strong>
+                  <br>
+
+                  <span>La imagen no puede exceder los 50 Kilobytes.</span>
+                  <div class="input-group input-group-lg mb-3">
+                    <span class="input-group-text">
+                      <i class="fa-solid fa-image" [class.green-icon]="this.form.get('not_foto')?.valid"
+                        [class.red-icon]="this.form.get('not_foto')?.invalid && this.form.get('not_foto')?.touched"></i>
+                    </span>
+                    <input formControlName="not_foto" type="file" class="form-control" placeholder="foto" (change)="convertBase($event)">
+                  </div>
+                  <!--Boton de Crear/Editar-->
+                  <div>
+                    <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                      <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                      <button class="btn btn-warning" (click)="this.form.reset()"  type="button"><i
+                        class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="titulo">LISTADO DE NOTICIAS</h5>
+          <hr>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><strong>Codigo</strong></td>
+                <td><strong>foto</strong></td>
+                <td><strong>Nombre</strong></td>
+                <td><strong>Subtitulo</strong></td>
+                <td><strong>Descripción</strong></td>
+                <td><strong>Fecha creación</strong></td>
+                <td><strong>Fuente URL</strong></td>
+                <td><strong>Usuario</strong></td>
+                <td><strong>Acciones</strong></td>
+              </tr>
+            </thead>
+            <tbody class="align-middle">
+              <tr *ngFor="let News of News let iControl=index">
+                <td>{{News.not_codigo}}</td>
+                <td><img src="{{News.not_foto}}" alt="" width="100" height="100"></td>
+                <td>{{News.not_nombre}}</td>
+                <td>{{News.not_subtitulo}}</td>
+                <td>{{News.not_descripcion}}</td>
+                <td>{{News.not_fecha_creacion }}</td>
+                <td>{{News.not_url}}</td>
+                <td>{{News.fk_not_adm_cedula}}</td>
+                <td>
+                  <i (click)="selectNews(News)" class="far fa-solid fa-pen-to-square text-info"
+                    data-bs-toggle="collapse" href="#addNews">&nbsp;</i>
+                  <i (click)="deleteNews(News.not_codigo,iControl)" class="far fa-solid fa-trash text-danger"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
