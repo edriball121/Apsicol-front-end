@@ -43,7 +43,6 @@ export class GranjeroComponent implements OnInit {
     //listar granjeros
     this.FarmerService.getFarmer().subscribe(respuesta => {
       this.Farmers = respuesta;
-      console.log(this.Farmers);
     });
     //verificar rol
     this.rol = this.verifyToken.obtenerRol();
