@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    .decision {
+      cursor: pointer;
+      fill: lightblue;
+      stroke: black;
+    }
+
+    .decision-text {
+      pointer-events: none;
+    }
+
+    .connection {
+      stroke: red;
+      stroke-width: 2;
+    }
+  </style>
+</head>
+
+<body>
+
+  <svg id="decisionTree" width="1200" height="800">
+    <!-- Raíz del árbol de decisiones -->
+    <rect id="root" class="decision" x="450" y="20" rx="15" ry="15" width="100" height="40"></rect>
+    <text x="465" y="45" class="decision-text" font-family="Verdana" font-size="12">Inicio</text>
+  </svg>
+
+  <script>
+    const treeData = {
+      name: 'Inicio',
+      x: 450,
+      y: 20,
+      children: [
+        {
+          name: 'Agrícola',
+          children: [
+            { name: 'Clima frio' },
+            { name: 'Clima caliente' },
+            { name: 'Clima tropical' },
+          ]
+        },
+        {
+          name: 'Pecuario',
+          children: [
+            { name: 'Agrícola', children: [ { name: 'Clima' } ] },
+            { name: 'Pecuario' }
+          ]
+        }
+      ]
+    };
+
+    function findNode(root, x, y) {
+      if (root.x === x && root.y === y) return root;
+
+      for (const child of (root.children || [])) {
+        const found = findNode(child, x, y);
+        if (found) return found;
+      }
+
+      return null;
+    }
+
+    function drawConnection(x1, y1, x2, y2) {
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', x1);
+      line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2);
+      line.setAttribute('y2', y2);
+      line.classList.add('connection');
+      document.getElementById('decisionTree').appendChild(line);
+    }
+
+    function drawTree(node, x, y, offsetX = 0) {
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+      rect.setAttribute('x', x + offsetX);
+      rect.setAttribute('y', y);
+      rect.setAttribute('rx', 15);
+      rect.setAttribute('ry', 15);
+      rect.setAttribute('width', 100);
+      rect.setAttribute('height', 40);
+      rect.classList.add('decision');
+
+      text.setAttribute('x', x + 5 + offsetX);
+      text.setAttribute('y', y + 25);
+      text.setAttribute('class', 'decision-text');
+      text.setAttribute('font-family', 'Verdana');
+      text.setAttribute('font-size', 12);
+      text.textContent = node.name;
+
+      document.getElementById('decisionTree').appendChild(rect);
+      document.getElementById('decisionTree').appendChild(text);
+
+      node.x = x + offsetX;
+      node.y = y;
+    }
+
+    drawTree(treeData, 450, 20);
+
+    document.getElementById('decisionTree').addEventListener('click', function (e) {
+      if (e.target.classList.contains('decision')) {
+        const x = parseInt(e.target.getAttribute('x'));
+        const y = parseInt(e.target.getAttribute('y'));
+
+        const node = findNode(treeData, x, y);
+
+        if (node && node.children) {
+          let newY = y + 60;
+          let offsetX = 0;
+
+          if (node.children.length > 1) {
+            offsetX = -60;
+          }
+
+          node.children.forEach(child => {
+            drawTree(child, x, newY, offsetX);
+            drawConnection(x + 50, y + 40, x + 50 + offsetX, newY);
+            newY += 60;
+            offsetX += 120;
+          });
+        }
+      }
+    });
+  </script>
+</body>
+</html>
