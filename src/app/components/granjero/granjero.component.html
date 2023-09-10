@@ -23,7 +23,7 @@
                       [class.red-icon]="this.form.get('gra_cedula')?.invalid && this.form.get('gra_cedula')?.touched"></i>
                   </span>
                   <input formControlName="gra_cedula" minlength="8" maxlength="11" type="number" class="form-control"
-                    placeholder="Cedula">
+                    placeholder="Cedula" [attr.disabled]="TituloAccion=='Editar'">
                 </div>
                 <!--Input de nombre-->
                 <div class="input-group input-group-lg mb-3">

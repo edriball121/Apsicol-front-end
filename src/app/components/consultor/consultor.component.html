@@ -1,1 +1,165 @@
-<p>consultor works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Consultor</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <button class="btn" data-bs-toggle="collapse" href="#addAdmin" aria-expanded="false" aria-controls="addAdmin">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} CONSULTOR</h5>
+      </button>
+      <div class="collapse" id="addAdmin">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addConsultant()">
+                <!--Input de cedula-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-credit-card" [class.green-icon]="this.form.get('con_cedula')?.valid"
+                      [class.red-icon]="this.form.get('con_cedula')?.invalid && this.form.get('con_cedula')?.touched"></i>
+                  </span>
+                  <input formControlName="con_cedula" minlength="8" maxlength="11" type="number" class="form-control"
+                    placeholder="Cedula" [attr.disabled]="TituloAccion=='Editar'">
+                </div>
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('con_nombre')?.valid"
+                      [class.red-icon]="this.form.get('con_nombre')?.invalid && this.form.get('con_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="con_nombre" type="text" class="form-control" placeholder="Nombre">
+                </div>
+                <!--Input de apellidos-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('con_apellido')?.valid"
+                      [class.red-icon]="this.form.get('con_apellido')?.invalid && this.form.get('con_apellido')?.touched"></i>
+                  </span>
+                  <input formControlName="con_apellido" type="text" class="form-control" placeholder="Apellidos">
+                </div>
+                <!--Input de password-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-key" [class.green-icon]="this.form.get('con_password')?.valid"
+                      [class.red-icon]="this.form.get('con_password')?.invalid && this.form.get('con_password')?.touched"></i>
+                  </span>
+                  <input formControlName="con_password" type="password" class="form-control" placeholder="Contraseña">
+                </div>
+                <!--Input de telefono-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-phone-flip" [class.green-icon]="this.form.get('con_telefono')?.valid"
+                      [class.red-icon]="this.form.get('con_telefono')?.invalid && this.form.get('con_telefono')?.touched"></i>
+                  </span>
+                  <input formControlName="con_telefono" minlength="8" maxlength="11" type="number" class="form-control"
+                    placeholder="Telefono">
+                </div>
+                <!--Input de email-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-at" [class.green-icon]="this.form.get('con_email')?.valid"
+                      [class.red-icon]="this.form.get('con_email')?.invalid && this.form.get('con_email')?.touched"></i>
+                  </span>
+                  <input formControlName="con_email" type="email" class="form-control" placeholder="Correo electronico">
+                </div>
+                <!--Input de direccion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-location-dot" [class.green-icon]="this.form.get('con_direccion')?.valid"
+                      [class.red-icon]="this.form.get('con_direccion')?.invalid && this.form.get('con_direccion')?.touched"></i>
+                  </span>
+                  <input formControlName="con_direccion" type="text" class="form-control" placeholder="Dirección">
+                </div>
+
+                <!--Input de fecha nacimiento-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-calendar-check"
+                      [class.green-icon]="this.form.get('con_fecha_nacimiento')?.valid"
+                      [class.red-icon]="this.form.get('con_fecha_nacimiento')?.invalid && this.form.get('con_fecha_nacimiento')?.touched"></i>
+                  </span>
+                  <input formControlName="con_fecha_nacimiento" type="date" class="form-control"
+                    placeholder="Fecha de nacimiento">
+                </div>
+                <!--Input de profesion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-person-digging" [class.green-icon]="this.form.get('con_profesion')?.valid"
+                      [class.red-icon]="this.form.get('con_profesion')?.invalid && this.form.get('con_profesion')?.touched"></i>
+                  </span>
+                  <input formControlName="con_profesion" type="text" class="form-control" placeholder="Profesión">
+                </div>
+                <!--Input de años experiencia-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-business-time" [class.green-icon]="this.form.get('con_annos_experiencia')?.valid"
+                      [class.red-icon]="this.form.get('con_annos_experiencia')?.invalid && this.form.get('con_annos_experiencia')?.touched"></i>
+                  </span>
+                  <input formControlName="con_annos_experiencia" type="number" class="form-control" placeholder="Años de experiencia">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset();" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE CONSULTORES</h5>
+        <hr>
+        <table class="table">
+          <thead>
+            <tr>
+              <td><strong>Cedula</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Apellido</strong></td>
+              <td><strong>Telefono</strong></td>
+              <td><strong>Email</strong></td>
+              <td><strong>Dirección</strong></td>
+              <td><strong>Fecha nacimiento</strong></td>
+              <td><strong>Fecha creación</strong></td>
+              <td><strong>Profesión</strong></td>
+              <td><strong>Años experiencia</strong></td>
+              <td><strong>Rol</strong></td>
+              <td><strong>Acciones</strong></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Consultants of Consultants let iControl=index">
+              <td>{{Consultants.con_cedula}}</td>
+              <td>{{Consultants.con_nombre}}</td>
+              <td>{{Consultants.con_apellido}}</td>
+              <td>{{Consultants.con_telefono}}</td>
+              <td>{{Consultants.con_email}}</td>
+              <td>{{Consultants.con_direccion}}</td>
+              <td>{{Consultants.con_fecha_nacimiento}}</td>
+              <td>{{Consultants.con_fecha_creacion}}</td>
+              <td>{{Consultants.con_profesion}}</td>
+              <td>{{Consultants.con_annos_experiencia}}</td>
+              <td>{{Consultants.rol}}</td>
+              <td>
+                <i (click)="selectConsultant(Consultants)" class="far fa-solid fa-pen-to-square text-info"
+                  data-bs-toggle="collapse" href="#addAdmin">&nbsp;</i>
+                <i (click)="deleteConsultant(Consultants.con_cedula,iControl)"
+                  class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

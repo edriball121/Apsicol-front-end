@@ -23,7 +23,7 @@
                       [class.red-icon]="this.form.get('adm_cedula')?.invalid && this.form.get('adm_cedula')?.touched"></i>
                   </span>
                   <input formControlName="adm_cedula" minlength="8" maxlength="11" type="number" class="form-control"
-                    placeholder="Cedula">
+                    placeholder="Cedula" [attr.disabled]="TituloAccion=='Editar'">
                 </div>
                 <!--Input de nombre-->
                 <div class="input-group input-group-lg mb-3">
@@ -31,7 +31,7 @@
                     <i class="fa-solid fa-font" [class.green-icon]="this.form.get('adm_nombre')?.valid"
                       [class.red-icon]="this.form.get('adm_nombre')?.invalid && this.form.get('adm_nombre')?.touched"></i>
                   </span>
-                  <input formControlName="adm_nombre" type="text" class="form-control" placeholder="Nombre">
+                  <input formControlName="adm_nombre" type="text" class="form-control" placeholder="Nombre" >
                 </div>
                 <!--Input de apellidos-->
                 <div class="input-group input-group-lg mb-3">

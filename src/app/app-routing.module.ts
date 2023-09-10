@@ -12,6 +12,7 @@ import { RoleGuard } from './guards/role.guard';
 import { ConsultaComponent } from './components/consulta/consulta.component';
 import { GranjeroComponent } from './components/granjero/granjero.component';
 import { NoticiasComponent } from './components/noticias/noticias.component';
+import { ConsultorComponent } from './components/consultor/consultor.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
@@ -19,16 +20,17 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recoverPassword', component: RecoverPasswordComponent },
-  { path: 'admin', component: AdministradorComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
-  { path: 'consult', component: ConsultaComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
-  { path: 'farmer', component: GranjeroComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
-  { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
+  { path: 'admin', component: AdministradorComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
+  { path: 'consult', component: ConsultaComponent, data: { expectedRole: ['consultant', 'admin', 'farmer'] }, canActivate: [RoleGuard, AuthGuard] },
+  { path: 'farmer', component: GranjeroComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
+  { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
+  { path: 'consultant', component: ConsultorComponent},
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
