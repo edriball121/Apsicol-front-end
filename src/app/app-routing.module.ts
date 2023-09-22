@@ -14,6 +14,7 @@ import { GranjeroComponent } from './components/granjero/granjero.component';
 import { NoticiasComponent } from './components/noticias/noticias.component';
 import { DecisionTreeComponent } from './components/decision-tree/decision-tree.component';
 import { ConsultorComponent } from './components/consultor/consultor.component';
+import { CiudadComponent } from './components/ciudad/ciudad.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'consult', component: ConsultaComponent, data: { expectedRole: ['consultant', 'admin', 'farmer'] }, canActivate: [RoleGuard, AuthGuard] },
   { path: 'farmer', component: GranjeroComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
   { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
-  { path: 'consultant', component: ConsultorComponent},
+  { path: 'consultant', component: ConsultorComponent },
+  { path: 'city', component: CiudadComponent },
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];

@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Ciudades</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <button class="btn" data-bs-toggle="collapse" href="#addAdmin" aria-expanded="false" aria-controls="addAdmin">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} CIUDAD</h5>
+      </button>
+      <div class="collapse" id="addAdmin">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addCity()">
+                <!--Input de departamento-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('ciu_departamento')?.valid"
+                      [class.red-icon]="this.form.get('ciu_departamento')?.invalid && this.form.get('ciu_departamento')?.touched"></i>
+                  </span>
+                  <input formControlName="ciu_departamento" type="text" class="form-control" placeholder="Departamento">
+                </div>
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-regular fa-credit-card" [class.green-icon]="this.form.get('ciu_nombre')?.valid"
+                      [class.red-icon]="this.form.get('ciu_nombre')?.invalid && this.form.get('ciu_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="ciu_nombre" type="text" class="form-control"
+                    placeholder="Ciudad">
+                </div>
+                <!--Input de codigo postal-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('ciu_cod_postal')?.valid"
+                      [class.red-icon]="this.form.get('ciu_cod_postal')?.invalid && this.form.get('ciu_cod_postal')?.touched"></i>
+                  </span>
+                  <input formControlName="ciu_cod_postal" type="number" class="form-control" placeholder="Codigo postal">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset();" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE CIUDADES</h5>
+        <hr>
+        <table class="table">
+          <thead>
+            <tr>
+              <td><strong>Codigo postal</strong></td>
+              <td><strong>Ciudad</strong></td>
+              <td><strong>Departamento</strong></td>
+              <td><strong>Acciones</strong></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Citys of Citys let iControl=index">
+              <td>{{Citys.ciu_cod_postal}}</td>
+              <td>{{Citys.ciu_nombre}}</td>
+              <td>{{Citys.ciu_departamento}}</td>
+              <td>
+                <i (click)="selectCity(Citys)" class="far fa-solid fa-pen-to-square text-info" data-bs-toggle="collapse"
+                  href="#addAdmin">&nbsp;</i>
+                <i (click)="deleteCity(Citys.ciu_codigo,iControl)" class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
