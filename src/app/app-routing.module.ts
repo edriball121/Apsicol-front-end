@@ -31,8 +31,8 @@ const routes: Routes = [
   { path: 'consult', component: ConsultaComponent, data: { expectedRole: ['consultant', 'admin', 'farmer'] }, canActivate: [RoleGuard, AuthGuard] },
   { path: 'farmer', component: GranjeroComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
   { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
-  { path: 'consultant', component: ConsultorComponent },
-  { path: 'city', component: CiudadComponent },
+  { path: 'consultant', component: ConsultorComponent, data: { expectedRole: ['consultant', 'admin'] }, canActivate: [RoleGuard, AuthGuard] },
+  { path: 'city', component: CiudadComponent, data: { expectedRole: ['consultant', 'admin', 'farmer'] }, canActivate: [RoleGuard, AuthGuard] },
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
