@@ -3,7 +3,7 @@
 
 <body>
   <script src="https://unpkg.com/gojs@2.3.10/release/go.js"></script>
-  <h1 class="text-center">Diagrama de decision</h1>
+  <h1 class="text-center">Diagrama de decisión</h1>
   <div id="allSampleContent" class="p-4 w-full">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -75,14 +75,14 @@
         // define tooltips for buttons
         var tooltipTemplate =
           $("ToolTip",
-            { "Border.fill": "whitesmoke", "Border.stroke": "lightgray" },
+            { "Border.fill": "aquamarine", "Border.stroke": "lightgray" },
             $(go.TextBlock,
               {
-                font: "8pt sans-serif",
+                font: "10pt sans-serif",
                 wrap: go.TextBlock.WrapFit,
-                desiredSize: new go.Size(200, NaN),
+                desiredSize: new go.Size(400, NaN),
                 alignment: go.Spot.Center,
-                margin: 6
+                margin: 10
               },
               new go.Binding("text", "", tooltipTextConverter))
           );
@@ -194,67 +194,67 @@
           // terminal nodes: the personality descriptions
           {
             key: "AFPL",
-            text: "AFPL: Scientist\nThe most self-confident of all types.  They focus on possibilities and use empirical logic to think about the future.  They prefer that events and people serve some positive use.  1% of population."
+            text: "******************************\n************AFPL************\n******************************\n\nPapa:\nSu cultivo puede ser una opción óptima debido a su potencial para brindar rendimientos estables y satisfacer necesidades alimentarias locales\n\nCafé:\nSu cultivo es rentable en la actualidad por que en general, en colombia, la geografia y las condiciones climaticas y el suelo producen un cafe de altisima calidad"
           },
           {
             key: "AFPC",
-            text: "AFPC: Architect\nAn architect of ideas, number systems, computer languages, and many other concepts.  They exhibit great precision in thought and language.  1% of the population."
+            text: "******************************\n************AFPC************\n******************************\n\nCebolla larga:\nLa cebolla larga es rica en nutrientes, incluyendo vitaminas (como la vitamina A y la vitamina C), minerales y antioxidantes.\n\nCebolla de huevo:\nAdemás de su versatilidad en la cocina, las cebollas son ricas en compuestos sulfurados que pueden tener beneficios para la salud."
           },
           {
-            key: "INFJ",
-            text: "INFJ: Author\nFocus on possibilities.  Place emphasis on values and come to decisions easily.  They have a strong drive to contribute to the welfare of others.  1% of population."
+            key: "AFLL",
+            text: "******************************\n************AFLL************\n******************************\n\nArandanos:\nSon ampliamente utilizados en la industria alimentaria en productos como jugos, mermeladas, postres y en la preparación de platos salados.\n\nManzana:\nLas manzanas se utilizan en una variedad de preparaciones culinarias, como pasteles, compotas, jugos y salsas. Son un alimento versátil y nutritivo.\n\nTomate de arbol:\nEs consumido fresco, en jugos, mermeladas, salsas y postres. Debido a sus propiedades nutritivas, es apreciado por sus beneficios para la salud\n"
           },
           {
-            key: "INFP",
-            text: "INFP: Questor\nPresent a calm and pleasant face to the world.  Although they seem reserved, they are actually very idealistic and care passionately about a few special people or a cause.  1% of the population."
+            key: "AFLC",
+            text: "******************************\n************AFLC************\n******************************\n\nRepollo:\nEl repollo es un ingrediente versátil en la cocina y puede prepararse de diversas maneras, como cocido, asado, en ensaladas, o fermentado para hacer chucrut.\n\nLechuga:\nEs una excelente fuente de fibra dietética, vitaminas (como la vitamina A y vitamina K) y minerales esenciales."
           },
           {
-            key: "ISTJ",
-            text: "ISTJ: Trustee\nISTJs like organized lives. They are dependable and trustworthy, as they dislike chaos and work on a task until completion. They prefer to deal with facts rather than emotions. 6% of the population."
+            key: "ACPL",
+            text: "******************************\n************ACPL************\n******************************\n\nAguacate:\nEsta fruta es rica en grasas saludables, especialmente ácidos grasos monoinsaturados, que son beneficiosos para la salud cardiovascular.\n\nMango:\nsta fruta es rica en vitaminas, especialmente vitamina C y vitamina A, así como en minerales como el potasio y el magnesio. También es una fuente de fibra dietética."
           },
           {
-            key: "ISTP",
-            text: "ISTP: Artisan\nISTPs are quiet people who are very capable at analyzing how things work. Though quiet, they can be influential, with their seclusion making them all the more skilled. 17% of the population."
+            key: "ACPC",
+            text: "******************************\n************ACPC************\n******************************\n\nMaíz:\nEs una fuente valiosa de carbohidratos, fibras, y también proporciona proteínas y grasas en menor medida.\n\nTrigo:\nEs rico en carbohidratos complejos, proteínas, fibra dietética y varios nutrientes, incluyendo vitaminas y minerales como el hierro y el magnesio.\n\nArroz:\nEs una fuente rica de carbohidratos complejos, y también proporciona proteínas, fibra dietética, vitaminas y minerales esenciales, como el magnesio y el selenio. "
           },
           {
-            key: "ISFJ",
-            text: "ISFJ: Conservator\nISFJs are not particularly social and tend to be most concerned with maintaining order in their lives. They are dutiful, respectful towards, and interested in others, though they are often shy. They are, therefore, trustworthy, but not bossy. 6% of the population."
+            key: "ACLL",
+            text: "******************************\n************ACLL************\n******************************\n\nUva:\nEl cultivo de uvas es una parte importante de la agricultura en muchas regiones del mundo, especialmente en áreas vitivinícolas conocidas por la producción de vinos.\n\nPlatano:\nEs una excelente fuente de carbohidratos, especialmente de azúcares naturales como la glucosa, fructosa y sacarosa.\n\nPapaya:\nEs rica en vitamina C, vitamina A, ácido fólico, y contiene enzimas digestivas como la papaína, que pueden ayudar en la digestión."
           },
           {
-            key: "ISFP",
-            text: "ISFP: Author\nFocus on possibilities.  Place emphasis on values and come to decisions easily.  They have a strong drive to contribute to the welfare of others.  1% of population."
+            key: "ACLC",
+            text: "******************************\n************ACLC************\n******************************\n\nTomate:\nEs rico en nutrientes, incluyendo vitaminas (como la vitamina C, vitamina A y algunas del complejo B), minerales como el potasio y el folato.\n\nUchuvas:\nSon ricas en nutrientes y contienen una buena cantidad de vitamina C, vitamina A, vitamina K, y también aportan minerales como el hierro y el fósforo. "
           },
           {
-            key: "ENTJ",
-            text: "ENTJ: Fieldmarshal\nThe driving force of this personality is to lead.  They like to impose structure and harness people to work towards distant goals.  They reject inefficiency.  5% of the population."
+            key: "PFPL",
+            text: "******************************\n************PFPL************\n******************************\n\nGanaderia productora - Bos taurus:\n Comprende toda la ganaderia de leche (Holstein - Normando - Jersey)"
           },
           {
-            key: "ENTP",
-            text: "ENTP: Inventor\nExercise their ingenuity by dealing with social, physical, and mechanical relationships.  They are always sensitive to future possibilities.  5% of the population."
+            key: "PFPC",
+            text: "******************************\n************PFPC************\n******************************\n\nConejos:\nLos conejos son animales populares tanto como mascotas como en la cría para consumo de carne y piel. Además, son animales utilizados en investigaciones científicas. \n\nOvejas:\nla Ovinocultura, es una parte importante de la agricultura en muchas partes del mundo. Las ovejas son valoradas por su lana, que se utiliza para producir tejidos y otros productos textiles."
           },
           {
-            key: "ENFJ",
-            text: "ENFJ: Pedagogue\nExcellent leaders; they are charismatic and never doubt that others will follow them and do as they ask.   They place a high value on cooperation.  5% of the population."
+            key: "PFLL",
+            text: "******************************\n************PFLL************\n******************************\n\nGanaderia cebuina - Indicus:\n Comprende toda la ganaderia Cebu de carne (Brahaman - Gyr - Caqueteño - Nelore - Guzerat)"
           },
           {
-            key: "ENFP",
-            text: "ENFP: Journalist\nPlace significance in everyday occurrences.  They have great ability to understand the motives of others.  They see life as a great drama.  They have a great impact on others.  5% of the population."
+            key: "PFLC",
+            text: "******************************\n************PFLC************\n******************************\n\nAves de corto vuelo / Peces con escama:\n Comprende las aves de corto vuelo como (Gallinas ponedoras - Codornises - Patos) \n Comprende peces como (Trucha - Mojarra - Cachama)"
           },
           {
-            key: "ESTJ",
-            text: "ESTJ: Administrator\nESTJs are pragmatic, and thus well-suited for business or administrative roles. They are traditionalists and conservatives, believing in the status quo. 13% of the population."
+            key: "PCPL",
+            text: "******************************\n************PCPL************\n******************************\n\nMulares:\nSon animales conocidos por su fuerza y resistencia, y a menudo se utilizan en labores agrícolas y de carga. Los mulares tienen una combinación de características que los hace adecuados para trabajos de fuerza y resistencia\n\nEquinos:\nPertenecientes a la familia Equidae, que incluye especies como caballos, burros, etc"
           },
           {
-            key: "ESTP",
-            text: "ESTP: Promoter\nESTPs tend to manipulate others in order to attain access to the finer aspects of life. However, they enjoy heading to such places with others. They are social and outgoing and are well-connected. 13% of the population."
+            key: "PCPC",
+            text: "******************************\n************PCPC************\n******************************\n\nAvejas:\nSon conocidas por su papel fundamental en la polinización de plantas, incluyendo muchas de las que son importantes para la agricultura.\n\nGusano de seda:\nEl cultivo de gusanos de seda para la producción de seda es conocido como sericultura. Ha sido una actividad importante en muchas culturas a lo largo de la historia y ha desempeñado un papel en la economía y la cultura de varias regiones.\n\nPollos de levante:\nCultivar pollos en una granja avícola puede proporcionar una serie de beneficios, tanto para los agricultores como para la comunidad en general. Algunos de estos beneficios incluyen (Fuente de Alimentación, Generación de Ingresos, Fertilizante Natural, Control de plagas, etc.)"
           },
           {
-            key: "ESFJ",
-            text: "ESFJ: Seller\nESFJs tend to be social and concerned for others. They follow tradition and enjoy a structured community environment. Always magnanimous towards others, they expect the same respect and appreciation themselves. 13% of the population."
+            key: "PCLL",
+            text: "******************************\n************PCLL************\n******************************\n\nCorderos - Cabras - Chivos:\nEl cultivo de estas especies ofrecer una serie de beneficios en una granja o explotación ganadera. Aquí están algunos de los beneficios asociados con la cría de estos animales (Producción de Carne, Lana y Piel, Fertilización del Suelo, Producción de Leche, Control de Vegetación)"
           },
           {
-            key: "ESFP",
-            text: "ESFP: Entertainer\nThe mantra of the ESFP would be \"Carpe Diem.\" They enjoy life to the fullest. They do not, thus, like routines and long-term goals. In general, they are very concerned with others and tend to always try to help others, often perceiving well their needs. 13% of the population."
+            key: "PCLC",
+            text: "******************************\n************PCLC************\n******************************\n\nPeces sin escama:\ncomprende peces como (Bagre - Vigotudo - Basa), Cultivar peces de escama en el contexto agrícola, también conocido como acuicultura de agua dulce, puede ofrecer una serie de ventajas y beneficios (Diversificación de la Producción, Fuente de Proteínas y Nutrientes, Aprovechamiento de Recursos Acuáticos, Generación de Ingresos Adicionales, Mejora de la Calidad del Agua)"
           }
         ];
 
@@ -277,29 +277,29 @@
               case 1:
                 d.category = "decision";
                 d.a = "F";
-                d.aText = "Frio";
+                d.aText = "Frio - Templado";
                 d.aToolTip = "El clima frio esta en el rando de los 12 °C y los 17 °C";
                 d.b = "C";
-                d.bText = "Calor";
+                d.bText = "Calido";
                 d.bToolTip = "El clima templado esta en el rango de los 17 °C y los 24 °C";
                 break;
               case 2:
                 d.category = "decision";
                 d.a = "P";
                 d.aText = "Pendiente";
-                d.aToolTip = "The “thinking” person bases their decisions on facts and without personal bias.  They are more comfortable with making impersonal judgments.  50% of the population.";
+                d.aToolTip = "Los terrenos pendientes son comunes en muchas áreas geográficas y pueden presentar desafíos particulares para la construcción, la agricultura y otras actividades humanas. También pueden influir en la forma en que se drena el agua y en la estabilidad del suelo.";
                 d.b = "L";
-                d.bText = "Llano";
-                d.bToolTip = "The “feeling” person bases their decisions on personal experience and emotion.  They make their emotions very visible.  50% of the population.";
+                d.bText = "Llano - Ondulado";
+                d.bToolTip = "Los terrenos planos son ideales para construcciones, agricultura y otras actividades que requieren una superficie estable y uniforme. Este tipo de terreno suele ser más fácil de trabajar y desarrollar en comparación con terrenos con pendientes pronunciadas.";
                 break;
               case 3:
                 d.category = "decision";
                 d.a = "L";
                 d.aText = "Largo plazo";
-                d.aToolTip = "The “judging” person enjoys closure.  They establish deadlines and take them seriously.  They despise being late.  50% of the population.";
+                d.aToolTip = "Periodo de tiempo comprendido mayor a 8 meses";
                 d.b = "C";
                 d.bText = "Corto plazo";
-                d.bToolTip = "The “perceiving” person likes to keep options open and fluid.  They have little regard for deadlines.  Dislikes making decisions unless they are completely sure they are right.  50% of the population.";
+                d.bToolTip = "Periodo de tiempo comprendido menor a 8 meses";
                 break;
               default:
                 d.category = "personality";
@@ -333,17 +333,18 @@
 
     <div id="sample">
       <div id="myDiagramDiv"
-        style="background-color: rgb(240, 255, 241); border: 1px solid green; width: 100%; height: 500px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto;">
-        <canvas tabindex="0" width="1054" height="498"
-          style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 498px; cursor: auto;"></canvas>
-        <div style="position: absolute; overflow: auto; width: 1054px; height: 498px; z-index: 1;">
+        style="background-color: rgb(240, 255, 241); border: 1px solid green; width: 100%; height: 700px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto;">
+        <canvas tabindex="0" width="1054" height="480"
+          style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 480px; cursor: auto;"></canvas>
+        <div style="position: absolute; overflow: auto; width: 1054px; height: 480px; z-index: 1;">
           <div style="position: absolute; width: 1px; height: 1px;"></div>
         </div>
       </div>
     </div>
     <hr>
     <div class="row">
-      <p>Para la construccion de este <strong><a href="https://gojs.net/latest/samples/decisionTree.html">diagrama de
+      <p class="text-center">Para la construccion de este <strong><a
+            href="https://gojs.net/latest/samples/decisionTree.html">diagrama de
             arbol de decisión </a></strong>se utilizo la libreria <strong><a
             href="https://gojs.net/latest/">GoJS</a></strong></p>
     </div>
