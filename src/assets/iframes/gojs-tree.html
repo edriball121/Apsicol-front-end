@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+  <script src="https://unpkg.com/gojs@2.3.10/release/go.js"></script>
+  <h1 class="text-center">Diagrama de decisión</h1>
+  <div id="allSampleContent" class="p-4 w-full">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script id="code">
+      function init() {
+
+        // Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
+        // For details, see https://gojs.net/latest/intro/buildingObjects.html
+        const $ = go.GraphObject.make;  // for conciseness in defining templates
+
+        myDiagram = new go.Diagram("myDiagramDiv",  // must name or refer to the DIV HTML element
+          {
+            initialContentAlignment: go.Spot.Left,
+            allowSelect: false,  // the user cannot select any part
+            // create a TreeLayout for the decision tree
+            layout: $(go.TreeLayout, { arrangement: go.TreeLayout.ArrangementFixedRoots })
+          });
+
+        // custom behavior for expanding/collapsing half of the subtree from a node
+        function buttonExpandCollapse(e, port) {
+          var node = port.part;
+          node.diagram.startTransaction("expand/collapse");
+          var portid = port.portId;
+          node.findLinksOutOf(portid).each(l => {
+            if (l.visible) {
+              // collapse whole subtree recursively
+              collapseTree(node, portid);
+            } else {
+              // only expands immediate children and their links
+              l.visible = true;
+              var n = l.getOtherNode(node);
+              if (n !== null) {
+                n.location = node.getDocumentPoint(go.Spot.TopRight);
+                n.visible = true;
+              }
+            }
+          });
+          myDiagram.toolManager.hideToolTip();
+          node.diagram.commitTransaction("expand/collapse");
+        }
+
+        // recursive function for collapsing complete subtree
+        function collapseTree(node, portid) {
+          node.findLinksOutOf(portid).each(l => {
+            l.visible = false;
+            var n = l.getOtherNode(node);
+            if (n !== null) {
+              n.visible = false;
+              collapseTree(n, null);  // null means all links, not just for a particular portId
+            }
+          });
+        }
+
+        // get the text for the tooltip from the data on the object being hovered over
+        function tooltipTextConverter(data) {
+          var str = "";
+          var e = myDiagram.lastInput;
+          var currobj = e.targetObject;
+          if (currobj !== null && (currobj.name === "ButtonA" ||
+            (currobj.panel !== null && currobj.panel.name === "ButtonA"))) {
+            str = data.aToolTip;
+          } else {
+            str = data.bToolTip;
+          }
+          return str;
+        }
+
+        // define tooltips for buttons
+        var tooltipTemplate =
+          $("ToolTip",
+            { "Border.fill": "aquamarine", "Border.stroke": "lightgray" },
+            $(go.TextBlock,
+              {
+                font: "10pt sans-serif",
+                wrap: go.TextBlock.WrapFit,
+                desiredSize: new go.Size(400, NaN),
+                alignment: go.Spot.Center,
+                margin: 10
+              },
+              new go.Binding("text", "", tooltipTextConverter))
+          );
+
+        // define the Node template for non-leaf nodes
+        myDiagram.nodeTemplateMap.add("decision",
+          $(go.Node, "Auto",
+            new go.Binding("text", "key"),
+            // define the node's outer shape, which will surround the Horizontal Panel
+            $(go.Shape, "Rectangle",
+              { fill: "whitesmoke", stroke: "lightgray" }),
+            // define a horizontal Panel to place the node's text alongside the buttons
+            $(go.Panel, "Horizontal",
+              $(go.TextBlock,
+                { font: "30px Roboto, sans-serif", margin: 5 },
+                new go.Binding("text", "key")),
+              // define a vertical panel to place the node's two buttons one above the other
+              $(go.Panel, "Vertical",
+                { defaultStretch: go.GraphObject.Fill, margin: 3 },
+                $("Button",  // button A
+                  {
+                    name: "ButtonA",
+                    click: buttonExpandCollapse,
+                    toolTip: tooltipTemplate
+                  },
+                  new go.Binding("portId", "a"),
+                  $(go.TextBlock,
+                    { font: '500 16px Roboto, sans-serif' },
+                    new go.Binding("text", "aText"))
+                ),  // end button A
+                $("Button",  // button B
+                  {
+                    name: "ButtonB",
+                    click: buttonExpandCollapse,
+                    toolTip: tooltipTemplate
+                  },
+                  new go.Binding("portId", "b"),
+                  $(go.TextBlock,
+                    { font: '500 16px Roboto, sans-serif' },
+                    new go.Binding("text", "bText"))
+                )  // end button B
+              )  // end Vertical Panel
+            )  // end Horizontal Panel
+          ));  // end Node and call to add
+
+        // define the Node template for leaf nodes
+        myDiagram.nodeTemplateMap.add("personality",
+          $(go.Node, "Auto",
+            new go.Binding("text", "key"),
+            $(go.Shape, "Rectangle",
+              { fill: "whitesmoke", stroke: "lightgray" }),
+            $(go.TextBlock,
+              {
+                font: '13px Roboto, sans-serif',
+                wrap: go.TextBlock.WrapFit, desiredSize: new go.Size(200, NaN), margin: 5
+              },
+              new go.Binding("text", "text"))
+          ));
+
+        // define the only Link template
+        myDiagram.linkTemplate =
+          $(go.Link, go.Link.Orthogonal,  // the whole link panel
+            { fromPortId: "" },
+            new go.Binding("fromPortId", "fromport"),
+            $(go.Shape,  // the link shape
+              { stroke: "lightblue", strokeWidth: 2 })
+          );
+
+        // create the model for the decision tree
+        var model =
+          new go.GraphLinksModel(
+            { linkFromPortIdProperty: "fromport" });
+        // set up the model with the node and link data
+        makeNodes(model);
+        makeLinks(model);
+        myDiagram.model = model;
+
+        // make all but the start node invisible
+        myDiagram.nodes.each(n => {
+          if (n.text !== "Inicio") n.visible = false;
+        });
+        myDiagram.links.each(l => {
+          l.visible = false;
+        });
+      }
+
+      function makeNodes(model) {
+        var nodeDataArray = [
+          { key: "Inicio" },  // the root node
+
+          // intermediate nodes: decisions on personality characteristics
+          { key: "A" },
+          { key: "P" },
+
+          { key: "AF" },
+          { key: "AC" },
+          { key: "PF" },
+          { key: "PC" },
+
+          { key: "AFP" },
+          { key: "AFL" },
+          { key: "ACP" },
+          { key: "ACL" },
+          { key: "PFP" },
+          { key: "PFL" },
+          { key: "PCP" },
+          { key: "PCL" },
+
+          // terminal nodes: the personality descriptions
+          {
+            key: "AFPL",
+            text: "******************************\n************AFPL************\n******************************\n\nPapa:\nSu cultivo puede ser una opción óptima debido a su potencial para brindar rendimientos estables y satisfacer necesidades alimentarias locales\n\nCafé:\nSu cultivo es rentable en la actualidad por que en general, en colombia, la geografia y las condiciones climaticas y el suelo producen un cafe de altisima calidad"
+          },
+          {
+            key: "AFPC",
+            text: "******************************\n************AFPC************\n******************************\n\nCebolla larga:\nLa cebolla larga es rica en nutrientes, incluyendo vitaminas (como la vitamina A y la vitamina C), minerales y antioxidantes.\n\nCebolla de huevo:\nAdemás de su versatilidad en la cocina, las cebollas son ricas en compuestos sulfurados que pueden tener beneficios para la salud."
+          },
+          {
+            key: "AFLL",
+            text: "******************************\n************AFLL************\n******************************\n\nArandanos:\nSon ampliamente utilizados en la industria alimentaria en productos como jugos, mermeladas, postres y en la preparación de platos salados.\n\nManzana:\nLas manzanas se utilizan en una variedad de preparaciones culinarias, como pasteles, compotas, jugos y salsas. Son un alimento versátil y nutritivo.\n\nTomate de arbol:\nEs consumido fresco, en jugos, mermeladas, salsas y postres. Debido a sus propiedades nutritivas, es apreciado por sus beneficios para la salud\n"
+          },
+          {
+            key: "AFLC",
+            text: "******************************\n************AFLC************\n******************************\n\nRepollo:\nEl repollo es un ingrediente versátil en la cocina y puede prepararse de diversas maneras, como cocido, asado, en ensaladas, o fermentado para hacer chucrut.\n\nLechuga:\nEs una excelente fuente de fibra dietética, vitaminas (como la vitamina A y vitamina K) y minerales esenciales."
+          },
+          {
+            key: "ACPL",
+            text: "******************************\n************ACPL************\n******************************\n\nAguacate:\nEsta fruta es rica en grasas saludables, especialmente ácidos grasos monoinsaturados, que son beneficiosos para la salud cardiovascular.\n\nMango:\nsta fruta es rica en vitaminas, especialmente vitamina C y vitamina A, así como en minerales como el potasio y el magnesio. También es una fuente de fibra dietética."
+          },
+          {
+            key: "ACPC",
+            text: "******************************\n************ACPC************\n******************************\n\nMaíz:\nEs una fuente valiosa de carbohidratos, fibras, y también proporciona proteínas y grasas en menor medida.\n\nTrigo:\nEs rico en carbohidratos complejos, proteínas, fibra dietética y varios nutrientes, incluyendo vitaminas y minerales como el hierro y el magnesio.\n\nArroz:\nEs una fuente rica de carbohidratos complejos, y también proporciona proteínas, fibra dietética, vitaminas y minerales esenciales, como el magnesio y el selenio. "
+          },
+          {
+            key: "ACLL",
+            text: "******************************\n************ACLL************\n******************************\n\nUva:\nEl cultivo de uvas es una parte importante de la agricultura en muchas regiones del mundo, especialmente en áreas vitivinícolas conocidas por la producción de vinos.\n\nPlatano:\nEs una excelente fuente de carbohidratos, especialmente de azúcares naturales como la glucosa, fructosa y sacarosa.\n\nPapaya:\nEs rica en vitamina C, vitamina A, ácido fólico, y contiene enzimas digestivas como la papaína, que pueden ayudar en la digestión."
+          },
+          {
+            key: "ACLC",
+            text: "******************************\n************ACLC************\n******************************\n\nTomate:\nEs rico en nutrientes, incluyendo vitaminas (como la vitamina C, vitamina A y algunas del complejo B), minerales como el potasio y el folato.\n\nUchuvas:\nSon ricas en nutrientes y contienen una buena cantidad de vitamina C, vitamina A, vitamina K, y también aportan minerales como el hierro y el fósforo. "
+          },
+          {
+            key: "PFPL",
+            text: "******************************\n************PFPL************\n******************************\n\nGanaderia productora - Bos taurus:\n Comprende toda la ganaderia de leche (Holstein - Normando - Jersey)"
+          },
+          {
+            key: "PFPC",
+            text: "******************************\n************PFPC************\n******************************\n\nConejos:\nLos conejos son animales populares tanto como mascotas como en la cría para consumo de carne y piel. Además, son animales utilizados en investigaciones científicas. \n\nOvejas:\nla Ovinocultura, es una parte importante de la agricultura en muchas partes del mundo. Las ovejas son valoradas por su lana, que se utiliza para producir tejidos y otros productos textiles."
+          },
+          {
+            key: "PFLL",
+            text: "******************************\n************PFLL************\n******************************\n\nGanaderia cebuina - Indicus:\n Comprende toda la ganaderia Cebu de carne (Brahaman - Gyr - Caqueteño - Nelore - Guzerat)"
+          },
+          {
+            key: "PFLC",
+            text: "******************************\n************PFLC************\n******************************\n\nAves de corto vuelo / Peces con escama:\n Comprende las aves de corto vuelo como (Gallinas ponedoras - Codornises - Patos) \n Comprende peces como (Trucha - Mojarra - Cachama)"
+          },
+          {
+            key: "PCPL",
+            text: "******************************\n************PCPL************\n******************************\n\nMulares:\nSon animales conocidos por su fuerza y resistencia, y a menudo se utilizan en labores agrícolas y de carga. Los mulares tienen una combinación de características que los hace adecuados para trabajos de fuerza y resistencia\n\nEquinos:\nPertenecientes a la familia Equidae, que incluye especies como caballos, burros, etc"
+          },
+          {
+            key: "PCPC",
+            text: "******************************\n************PCPC************\n******************************\n\nAvejas:\nSon conocidas por su papel fundamental en la polinización de plantas, incluyendo muchas de las que son importantes para la agricultura.\n\nGusano de seda:\nEl cultivo de gusanos de seda para la producción de seda es conocido como sericultura. Ha sido una actividad importante en muchas culturas a lo largo de la historia y ha desempeñado un papel en la economía y la cultura de varias regiones.\n\nPollos de levante:\nCultivar pollos en una granja avícola puede proporcionar una serie de beneficios, tanto para los agricultores como para la comunidad en general. Algunos de estos beneficios incluyen (Fuente de Alimentación, Generación de Ingresos, Fertilizante Natural, Control de plagas, etc.)"
+          },
+          {
+            key: "PCLL",
+            text: "******************************\n************PCLL************\n******************************\n\nCorderos - Cabras - Chivos:\nEl cultivo de estas especies ofrecer una serie de beneficios en una granja o explotación ganadera. Aquí están algunos de los beneficios asociados con la cría de estos animales (Producción de Carne, Lana y Piel, Fertilización del Suelo, Producción de Leche, Control de Vegetación)"
+          },
+          {
+            key: "PCLC",
+            text: "******************************\n************PCLC************\n******************************\n\nPeces sin escama:\ncomprende peces como (Bagre - Vigotudo - Basa), Cultivar peces de escama en el contexto agrícola, también conocido como acuicultura de agua dulce, puede ofrecer una serie de ventajas y beneficios (Diversificación de la Producción, Fuente de Proteínas y Nutrientes, Aprovechamiento de Recursos Acuáticos, Generación de Ingresos Adicionales, Mejora de la Calidad del Agua)"
+          }
+        ];
+
+        // Provide the same choice information for all of the nodes on each level.
+        // The level is implicit in the number of characters in the Key, except for the root node.
+        // In a different application, there might be different choices for each node, so the initialization would be above, where the Info's are created.
+        // But for this application, it makes sense to share the initialization code based on tree level.
+        for (var i = 0; i < nodeDataArray.length; i++) {
+          var d = nodeDataArray[ i ];
+          if (d.key === "Inicio") {
+            d.category = "decision";
+            d.a = "A";
+            d.aText = "Agricola";
+            d.aToolTip = "Conjunto de actividades económicas y técnicas relacionadas con el tratamiento del suelo y el cultivo de la tierra para la producción de alimentos.";
+            d.b = "P";
+            d.bText = "Pecuario";
+            d.bToolTip = "Actividad que consiste en el manejo y explotación de animales domesticables con fines de producción, para su aprovechamiento.";
+          } else {
+            switch (d.key.length) {
+              case 1:
+                d.category = "decision";
+                d.a = "F";
+                d.aText = "Frio - Templado";
+                d.aToolTip = "El clima frio esta en el rando de los 12 °C y los 17 °C";
+                d.b = "C";
+                d.bText = "Calido";
+                d.bToolTip = "El clima templado esta en el rango de los 17 °C y los 24 °C";
+                break;
+              case 2:
+                d.category = "decision";
+                d.a = "P";
+                d.aText = "Pendiente";
+                d.aToolTip = "Los terrenos pendientes son comunes en muchas áreas geográficas y pueden presentar desafíos particulares para la construcción, la agricultura y otras actividades humanas. También pueden influir en la forma en que se drena el agua y en la estabilidad del suelo.";
+                d.b = "L";
+                d.bText = "Llano - Ondulado";
+                d.bToolTip = "Los terrenos planos son ideales para construcciones, agricultura y otras actividades que requieren una superficie estable y uniforme. Este tipo de terreno suele ser más fácil de trabajar y desarrollar en comparación con terrenos con pendientes pronunciadas.";
+                break;
+              case 3:
+                d.category = "decision";
+                d.a = "L";
+                d.aText = "Largo plazo";
+                d.aToolTip = "Periodo de tiempo comprendido mayor a 8 meses";
+                d.b = "C";
+                d.bText = "Corto plazo";
+                d.bToolTip = "Periodo de tiempo comprendido menor a 8 meses";
+                break;
+              default:
+                d.category = "personality";
+                break;
+            }
+          }
+        }
+        model.nodeDataArray = nodeDataArray;
+      }
+
+      // The key strings implicitly hold the relationship information, based on their spellings.
+      // Other than the root node ("Start"), each node's key string minus its last letter is the
+      // key to the "parent" node.
+      function makeLinks(model) {
+        var linkDataArray = [];
+        var nda = model.nodeDataArray;
+        for (var i = 0; i < nda.length; i++) {
+          var key = nda[ i ].key;
+          if (key === "Inicio" || key.length === 0) continue;
+          // e.g., if key=="INTJ", we want: prefix="INT" and letter="J"
+          var prefix = key.slice(0, key.length - 1);
+          var letter = key.charAt(key.length - 1);
+          if (prefix.length === 0) prefix = "Inicio";
+          var obj = { from: prefix, fromport: letter, to: key };
+          linkDataArray.push(obj);
+        }
+        model.linkDataArray = linkDataArray;
+      }
+      window.addEventListener('DOMContentLoaded', init);
+    </script>
+
+    <div id="sample">
+      <div id="myDiagramDiv"
+        style="background-color: rgb(240, 255, 241); border: 1px solid green; width: 100%; height: 700px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0); cursor: auto;">
+        <canvas tabindex="0" width="1054" height="480"
+          style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 480px; cursor: auto;"></canvas>
+        <div style="position: absolute; overflow: auto; width: 1054px; height: 480px; z-index: 1;">
+          <div style="position: absolute; width: 1px; height: 1px;"></div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <p class="text-center">Para la construccion de este <strong><a
+            href="https://gojs.net/latest/samples/decisionTree.html">diagrama de
+            arbol de decisión </a></strong>se utilizo la libreria <strong><a
+            href="https://gojs.net/latest/">GoJS</a></strong></p>
+    </div>
+</body>
+
+</html>

@@ -32,6 +32,7 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { ToastrModule } from 'ngx-toastr';
 import { VerifyToken } from './services/verify-token.service';
+import { DecisionTreeComponent } from './components/decision-tree/decision-tree.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { VerifyToken } from './services/verify-token.service';
     RegisterComponent,
     RecoverPasswordComponent,
     PageNotFoundComponent,
+    DecisionTreeComponent,
 
   ],
   imports: [
