@@ -16,6 +16,7 @@ import { DecisionTreeComponent } from './components/decision-tree/decision-tree.
 import { ConsultorComponent } from './components/consultor/consultor.component';
 import { CiudadComponent } from './components/ciudad/ciudad.component';
 import { AgricolaComponent } from './components/agricola/agricola.component';
+import { DetalleAgricolaPecuarioComponent } from './components/detalle-agricola-pecuario/detalle-agricola-pecuario.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'consultant', component: ConsultorComponent, data: { expectedRole: [ 'consultant', 'admin' ] }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'city', component: CiudadComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
-  { path: 'farming', component: AgricolaComponent},
+  { path: 'farming', component: AgricolaComponent },
+  { path: 'farming/:id', component: DetalleAgricolaPecuarioComponent },
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];

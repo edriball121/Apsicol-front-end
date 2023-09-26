@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AgricolaService } from './../../services/agricola/agricola.service';
 import { ToastrService } from 'ngx-toastr';
 import { VerifyToken } from './../../services/verify-token.service';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 
@@ -25,6 +26,7 @@ export class AgricolaComponent implements OnInit {
     private FarmingService: AgricolaService,
     private toastr: ToastrService,
     private verifyToken: VerifyToken,
+    private router: Router,
   ) {
     //restricciones del formulario
     this.form = this.fb.group({
@@ -98,6 +100,19 @@ export class AgricolaComponent implements OnInit {
     });
     this.imagenUrl = Farmings.Ape_Foto;
   }
+  //ver el producto agricola a detalle
+  detailFarming(Farmings: any) {
+    this.Ape_codigo = Farmings.Ape_codigo;
+    this.form.patchValue({
+      Ape_codigo: this.Ape_codigo,
+      Ape_nombre: Farmings.Ape_nombre,
+      Ape_tipo: Farmings.Ape_tipo,
+      Ape_Descripcion: Farmings.Ape_Descripcion,
+    });
+    this.imagenUrl = Farmings.Ape_Foto;
+    this.router.navigate([ 'farming', this.Ape_codigo ], { state: { detalles: Farmings } });
+  }
+
   deleteFarming(Ape_codigo: any, iControl: any) {
     Swal.fire({
       title: '¿Estas seguro que deseas eliminar el registro?',
@@ -141,5 +156,4 @@ export class AgricolaComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
-
 }

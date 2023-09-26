@@ -1,0 +1,11 @@
+#atras{
+  color: #d60000;
+  margin-top: 50%;
+}
+#atras:hover{
+  cursor: pointer;
+}
+#title{
+color: green;
+font-size: 60px;
+}

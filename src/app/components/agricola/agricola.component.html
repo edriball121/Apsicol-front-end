@@ -115,20 +115,26 @@
     </div>
   </div>
   <div class="row" *ngIf="rol == 'farmer'">
-    <div class="card mb-3 col-6" *ngFor="let Farmings of Farmings let iControl=index" id="cards">
-      <div class="row g-0">
-        <div class="col-3">
-          <img src="{{Farmings.Ape_Foto}}" class="img-fluid rounded-start" alt="" width="100%" height="100">
-        </div>
-        <div class="col-9">
-          <div class="card-body">
-            <h4 class="card-title">{{Farmings.Ape_nombre}}</h4>
-            <hr>
-            <h6 class="card-subtitle">Familia: {{Farmings.Ape_tipo}}</h6>
-            <p class="card-text">{{Farmings.Ape_Descripcion}}</p>
-            <button type="button" class="btn btn-link" id="linkStrong"><strong>ver mas...</strong></button>
-            <p class="card-text"><small class="text-muted">Ultima actualización {{Farmings.Ape_fecha_creacion}}</small>
-            </p>
+    <div class="row">
+    </div>
+    <div class="row">
+      <div class="card mb-3 col-6" *ngFor="let Farmings of Farmings let iControl=index" id="cards">
+        <div class="row g-0">
+          <div class="col-3">
+            <img src="{{Farmings.Ape_Foto}}" class="img-fluid rounded-start" alt="" width="100%" height="100">
+          </div>
+          <div class="col-9">
+            <div class="card-body">
+              <h4 class="card-title">{{Farmings.Ape_nombre}}</h4>
+              <hr>
+              <h6 class="card-subtitle">Familia: {{Farmings.Ape_tipo}}</h6>
+              <p class="card-text">{{Farmings.Ape_Descripcion}}</p>
+              <button type="button" class="btn btn-link" id="linkStrong" (click)="detailFarming(Farmings)"><strong>ver
+                  mas...</strong></button>
+              <p class="card-text"><small class="text-muted">Ultima actualización
+                  {{Farmings.Ape_fecha_creacion}}</small>
+              </p>
+            </div>
           </div>
         </div>
       </div>
