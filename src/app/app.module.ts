@@ -59,7 +59,6 @@ import { DecisionTreeComponent } from './components/decision-tree/decision-tree.
     RecoverPasswordComponent,
     PageNotFoundComponent,
     DecisionTreeComponent,
-
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ import { NoticiasComponent } from './components/noticias/noticias.component';
 import { DecisionTreeComponent } from './components/decision-tree/decision-tree.component';
 import { ConsultorComponent } from './components/consultor/consultor.component';
 import { CiudadComponent } from './components/ciudad/ciudad.component';
+import { AgricolaComponent } from './components/agricola/agricola.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
@@ -22,23 +23,20 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'recoverPassword', component: RecoverPasswordComponent },
+  { path: 'decision-tree', component: DecisionTreeComponent },
   { path: 'admin', component: AdministradorComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'consult', component: ConsultaComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'farmer', component: GranjeroComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
-  { path: 'decision-tree', component: DecisionTreeComponent },
-  { path: 'admin', component: AdministradorComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
-  { path: 'consult', component: ConsultaComponent, data: { expectedRole: ['consultant', 'admin', 'farmer'] }, canActivate: [RoleGuard, AuthGuard] },
-  { path: 'farmer', component: GranjeroComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
-  { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [RoleGuard, AuthGuard] },
-  { path: 'consultant', component: ConsultorComponent, data: { expectedRole: ['consultant', 'admin'] }, canActivate: [RoleGuard, AuthGuard] },
-  { path: 'city', component: CiudadComponent, data: { expectedRole: ['consultant', 'admin', 'farmer'] }, canActivate: [RoleGuard, AuthGuard] },
+  { path: 'consultant', component: ConsultorComponent, data: { expectedRole: [ 'consultant', 'admin' ] }, canActivate: [ RoleGuard, AuthGuard ] },
+  { path: 'city', component: CiudadComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
+  { path: 'farming', component: AgricolaComponent},
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

@@ -1,0 +1,13 @@
+#cards {
+  border-radius: 20px;
+  border-width: 2px;
+  background-color: rgba(227, 255, 231, 0.206);
+  border-style: dashed;
+  cursor: pointer;
+}
+#cards:hover {
+  background: rgba(0, 183, 74, 0.5);
+}
+#linkStrong {
+  color: rgba(8, 123, 12, 0.758);
+}

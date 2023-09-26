@@ -1,1 +1,137 @@
-<p>agricola works!</p>
+<div class="container-fluid" data-bs-theme="dark">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Agricola</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol == 'admin' || rol == 'consultant'">
+    <div>
+      <button class="btn" data-bs-toggle="collapse" href="#addFarming" aria-expanded="false" aria-controls="addFarming">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} AGRICOLA</h5>
+      </button>
+      <div class="collapse" id="addFarming">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addFarming()">
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-heading" [class.green-icon]="this.form.get('Ape_nombre')?.valid"
+                      [class.red-icon]="this.form.get('Ape_nombre')?.invalid && this.form.get('Ape_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="Ape_nombre" type="text" class="form-control"
+                    placeholder="Nombre del producto agricola">
+                </div>
+                <!--Input de tipo-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-italic" [class.green-icon]="this.form.get('Ape_tipo')?.valid"
+                      [class.red-icon]="this.form.get('Ape_tipo')?.invalid && this.form.get('Ape_tipo')?.touched"></i>
+                  </span>
+                  <input formControlName="Ape_tipo" type="text" class="form-control"
+                    placeholder="Tipo del producto agricola">
+                </div>
+                <!--Input de descripcion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-link" [class.green-icon]="this.form.get('Ape_Descripcion')?.valid"
+                      [class.red-icon]="this.form.get('Ape_Descripcion')?.invalid && this.form.get('Ape_Descripcion')?.touched"></i>
+                  </span>
+                  <textarea formControlName="Ape_Descripcion" type="text" class="form-control"
+                    placeholder="Descripción de el producto agricola" rows="10"></textarea>
+                </div>
+                <!--Input de foto-->
+                <strong>Nota</strong>
+                <br>
+                <span>La imagen no puede exceder los 50 Kilobytes.</span>
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-image" [class.green-icon]="this.form.get('Ape_Foto')?.valid"
+                      [class.red-icon]="this.form.get('Ape_Foto')?.invalid && this.form.get('Ape_Foto')?.touched"></i>
+                  </span>
+                  <input formControlName="Ape_Foto" type="file" class="form-control" placeholder="foto"
+                    (change)="convertBase($event)">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset()" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol == 'admin' || rol == 'consultant'">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE PRODUCTOS AGRICOLA
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+            integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+            integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+            crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        </h5>
+        <hr>
+        <table class="table">
+          <thead>
+            <tr>
+              <td><strong>Codigo</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Tipo</strong></td>
+              <td><strong>Fecha creación</strong></td>
+              <td><strong>Foto</strong></td>
+              <td><strong>Descripcion</strong></td>
+              <td><strong>Acciones</strong></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Farmings of Farmings let iControl=index">
+              <td>{{Farmings.Ape_codigo}}</td>
+              <td>{{Farmings.Ape_nombre}}</td>
+              <td>{{Farmings.Ape_tipo}}</td>
+              <td>{{Farmings.Ape_fecha_creacion}}</td>
+              <td><img src="{{Farmings.Ape_Foto}}" alt="" width="100" height="100"></td>
+              <td>{{Farmings.Ape_Descripcion}}</td>
+              <td>
+                <i (click)="selectFarming(Farmings)" class="far fa-solid fa-pen-to-square text-info"
+                  data-bs-toggle="collapse" href="#addAdmin">&nbsp;</i>
+                <i (click)="deleteFarming(Farmings.Ape_codigo, iControl)" class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol == 'farmer'">
+    <div class="card mb-3 col-6" *ngFor="let Farmings of Farmings let iControl=index" id="cards">
+      <div class="row g-0">
+        <div class="col-3">
+          <img src="{{Farmings.Ape_Foto}}" class="img-fluid rounded-start" alt="" width="100%" height="100">
+        </div>
+        <div class="col-9">
+          <div class="card-body">
+            <h4 class="card-title">{{Farmings.Ape_nombre}}</h4>
+            <hr>
+            <h6 class="card-subtitle">Familia: {{Farmings.Ape_tipo}}</h6>
+            <p class="card-text">{{Farmings.Ape_Descripcion}}</p>
+            <button type="button" class="btn btn-link" id="linkStrong"><strong>ver mas...</strong></button>
+            <p class="card-text"><small class="text-muted">Ultima actualización {{Farmings.Ape_fecha_creacion}}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
