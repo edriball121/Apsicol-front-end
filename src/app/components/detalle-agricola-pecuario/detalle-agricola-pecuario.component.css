@@ -1,0 +1,16 @@
+#back{
+  color: #d60000;
+  margin-top: 50%;
+}
+#back:hover{
+  cursor: pointer;
+}
+#title{
+color: green;
+font-size: 60px;
+}
+#img_detail{
+  border-color: rgb(185, 183, 183);
+  border-width: 5px;
+  border-style: groove;
+}

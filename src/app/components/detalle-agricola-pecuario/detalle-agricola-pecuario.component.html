@@ -1,0 +1,27 @@
+<div class="container" *ngIf="detallesAgricolaPecuario">
+  <div class="row">
+    <div class="card">
+      <div class="row">
+        <div class="col-1"><i class="fa-solid fa-circle-chevron-left fa-fade fa-xl" id="back"
+            routerLink="./../../farming">Atras</i></div>
+      </div>
+      <div class="row">
+        <h1 class="card-title text-center" id="title">{{ detallesAgricolaPecuario.Ape_nombre }}</h1>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-7">
+          <div class="card-body">
+            <h3 class="card-subtitle">{{ detallesAgricolaPecuario.Ape_tipo }}</h3>
+            <hr>
+            <h2 class="card-subtitle">Descripcion</h2>
+            <p>Descripción: {{ detallesAgricolaPecuario.Ape_Descripcion }}</p>
+          </div>
+        </div>
+        <div class="col-4">
+          <img src="{{detallesAgricolaPecuario.Ape_Foto}}" alt="" class="img-fluid img-thumbnail" id="img_detail">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

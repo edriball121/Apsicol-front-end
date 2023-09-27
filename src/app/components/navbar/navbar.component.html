@@ -24,7 +24,8 @@
           </a>
           <a class="nav-item nav-link" *ngIf="estaLogueado">
             <i class="fa-solid fa-user"></i>
-            <span>&nbsp;{{ TituloAccion }}</span>
+            <span>&nbsp;{{ TituloAccion }}</span>&nbsp;|&nbsp;<i
+            class="fas fa-solid fa-power-off fa-fw me-3" (click)="cerrarSesion()" data-bs-toggle="tooltip" title="Cerrar Sesión"></i>
           </a>
         </li>
       </ul>

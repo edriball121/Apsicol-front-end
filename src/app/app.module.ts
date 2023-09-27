@@ -33,6 +33,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { ToastrModule } from 'ngx-toastr';
 import { VerifyToken } from './services/verify-token.service';
 import { DecisionTreeComponent } from './components/decision-tree/decision-tree.component';
+import { DetalleAgricolaPecuarioComponent } from './components/detalle-agricola-pecuario/detalle-agricola-pecuario.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { DecisionTreeComponent } from './components/decision-tree/decision-tree.
     RecoverPasswordComponent,
     PageNotFoundComponent,
     DecisionTreeComponent,
-
+    DetalleAgricolaPecuarioComponent,
   ],
   imports: [
     BrowserModule,
