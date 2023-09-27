@@ -21,8 +21,4 @@ export class MenubarComponent implements OnInit {
     this.verifyToken.validarToken();
     this.rol = this.verifyToken.obtenerRol();
   }
-  cerrarSesion(): void {
-    this.verifyToken.destruirToken();
-    this.router.navigate([ 'landingPage' ]);
-  }
 }

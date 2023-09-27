@@ -21,6 +21,8 @@ export class AgricolaComponent implements OnInit {
   rol!: string;
   base64Image: string = '';
   imagenUrl!: string;
+  searchTerm: string = '';
+  searchResults: any[] = [];
   constructor(
     private fb: FormBuilder,
     private FarmingService: AgricolaService,
@@ -35,15 +37,19 @@ export class AgricolaComponent implements OnInit {
       Ape_Foto: [ "" ],
       Ape_Descripcion: [ "" ],
     });
+    this.searchTerm = '';
+    this.searchResults = [];
   }
 
   ngOnInit(): void {
     this.getFarmig();
+    this.search();
     //verificar rol
     this.rol = this.verifyToken.obtenerRol();
   }
 
   getFarmig() {
+    console.log('getFarmig() called');
     //Listar productos agricolas
     this.FarmingService.getFarmig().subscribe(respuesta => {
       this.Farmings = respuesta;
@@ -156,4 +162,14 @@ export class AgricolaComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
+
+  search() {
+    console.log('search() called');
+    if (this.Farmings) {
+      this.searchResults = this.Farmings.filter((farming: any) => {
+        return farming.Ape_nombre.toLowerCase().includes(this.searchTerm.toLowerCase());
+      });
+    }
+  }
+
 }
