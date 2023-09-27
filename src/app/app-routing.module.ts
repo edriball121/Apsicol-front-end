@@ -31,8 +31,8 @@ const routes: Routes = [
   { path: 'news', component: NoticiasComponent, data: { expectedRole: 'admin' }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'consultant', component: ConsultorComponent, data: { expectedRole: [ 'consultant', 'admin' ] }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'city', component: CiudadComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
-  { path: 'farming', component: AgricolaComponent },
-  { path: 'farming/:id', component: DetalleAgricolaPecuarioComponent },
+  { path: 'farming', component: AgricolaComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
+  { path: 'farming/:id', component: DetalleAgricolaPecuarioComponent, data: { expectedRole: [ 'consultant', 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ]  },
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
