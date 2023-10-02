@@ -49,7 +49,6 @@ export class AgricolaComponent implements OnInit {
   }
 
   getFarmig() {
-    console.log('getFarmig() called');
     //Listar productos agricolas
     this.FarmingService.getFarmig().subscribe(respuesta => {
       this.Farmings = respuesta;
@@ -69,7 +68,7 @@ export class AgricolaComponent implements OnInit {
       Ape_Descripcion: this.form.get('Ape_Descripcion')?.value,
     }
     if (this.Ape_codigo == undefined) {
-      //agregar noticia
+      //agregar agricola
       this.FarmingService.addFarmig(Farmings).subscribe(respuesta => {
         this.ngOnInit();
         this.form.reset();
@@ -81,7 +80,7 @@ export class AgricolaComponent implements OnInit {
         });
       });
     } else {
-      //editar noticia
+      //editar agricola
       this.FarmingService.editFarmig(this.Ape_codigo, Farmings).subscribe(respuesta => {
         this.TituloAccion = 'agregar';
         this.form.reset();
