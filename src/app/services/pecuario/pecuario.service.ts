@@ -29,7 +29,6 @@ export class PecuarioService {
   }
   //eliminar Agricola
   deleteLivestock(Ape_codigo: any): Observable<any> {
-    console.log(Ape_codigo);
     return this.http.delete(this.BASEAPI + this.LIVESTOCKAPI + Ape_codigo);
   }
 }

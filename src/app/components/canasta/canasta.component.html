@@ -1,1 +1,101 @@
-<p>canasta works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Precios canasta familiar</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol === 'admin'">
+    <div>
+      <button class="btn" data-bs-toggle="collapse" href="#addFamilyBasket" aria-expanded="false"
+        aria-controls="addFamilyBasket">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} PRECIO PRODUCTO</h5>
+      </button>
+      <div class="collapse" id="addFamilyBasket">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addFamilyBasket()">
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-heading" [class.green-icon]="this.form.get('cta_nombre')?.valid"
+                      [class.red-icon]="this.form.get('cta_nombre')?.invalid && this.form.get('cta_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="cta_nombre" type="text" class="form-control"
+                    placeholder="Nombre del producto">
+                </div>
+                <!--Input de precio-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-italic" [class.green-icon]="this.form.get('cta_precio')?.valid"
+                      [class.red-icon]="this.form.get('cta_precio')?.invalid && this.form.get('cta_precio')?.touched"></i>
+                  </span>
+                  <input formControlName="cta_precio" type="text" class="form-control" placeholder="Valor del producto">
+                </div>
+                <!--Input de ciudad-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('cta_ciudad')?.valid"
+                      [class.red-icon]="this.form.get('cta_ciudad')?.invalid && this.form.get('cta_ciudad')?.touched"></i>
+                  </span>
+                  <select formControlName="cta_ciudad" class="form-select" (change)="onCitySelect($event)">
+                    <option value="" disabled selected>Seleccionar...</option>
+                    <option *ngFor="let city of Citys" [value]="city.ciu_nombre">{{ city.ciu_nombre }}</option>
+                  </select>
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset()" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE PRODUCTOS</h5>
+        <hr>
+        <table class="table">
+          <thead>
+            <tr>
+              <td><strong>Codigo</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Precio</strong></td>
+              <td><strong>Fecha precio</strong></td>
+              <td><strong>Ciudad</strong></td>
+              <td><strong *ngIf="rol === 'admin'">Codigo ciudad</strong></td>
+              <td><strong *ngIf="rol === 'admin'">Usuario creador</strong></td>
+              <td *ngIf="rol === 'admin'"><strong>Acciones</strong></td>
+            </tr>
+          </thead>
+          <tbody class="align-middle">
+            <tr *ngFor="let FamilyBaskets of FamilyBasket let iControl=index">
+              <td>{{FamilyBaskets.cta_codigo}}</td>
+              <td>{{FamilyBaskets.cta_nombre}}</td>
+              <td>$ {{FamilyBaskets.cta_precio}}</td>
+              <td>{{FamilyBaskets.cta_fecha}}</td>
+              <td>{{FamilyBaskets.cta_ciudad }}</td>
+              <td *ngIf="rol === 'admin'">{{FamilyBaskets.fk_cta_ciu_codigo}}</td>
+              <td *ngIf="rol === 'admin'">{{FamilyBaskets.fk_cta_adm_cedula}}</td>
+              <td *ngIf="rol === 'admin'">
+                <i (click)="selectFamilyBasket(FamilyBaskets)" class="far fa-solid fa-pen-to-square text-info"
+                  data-bs-toggle="collapse" href="#addFamilyBasket">&nbsp;</i>
+                <i (click)="deleteFamilyBasket(FamilyBaskets.cta_codigo,iControl)"
+                  class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
