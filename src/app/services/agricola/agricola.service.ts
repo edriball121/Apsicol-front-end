@@ -28,7 +28,6 @@ export class AgricolaService {
   }
   //eliminar Agricola
   deleteFarmig(Ape_codigo: any): Observable<any> {
-    console.log(Ape_codigo);
     return this.http.delete(this.BASEAPI + this.FARMINGAPI + Ape_codigo);
   }
 }
