@@ -1,1 +1,134 @@
-<p>empresa works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Empresas</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol ==='admin'">
+    <div>
+      <button class="btn" data-bs-toggle="collapse" href="#addCompany" aria-expanded="false" aria-controls="addCompany">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} EMPRESA</h5>
+      </button>
+      <div class="collapse" id="addCompany">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addCompany()">
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('emp_nombre')?.valid"
+                      [class.red-icon]="this.form.get('emp_nombre')?.invalid && this.form.get('emp_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="emp_nombre" type="text" class="form-control"
+                    placeholder="Nombre de la empresa">
+                </div>
+                <!--Input de sub titulo-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-heading" [class.green-icon]="this.form.get('emp_subtitulo')?.valid"
+                      [class.red-icon]="this.form.get('emp_subtitulo')?.invalid && this.form.get('emp_subtitulo')?.touched"></i>
+                  </span>
+                  <input formControlName="emp_subtitulo" type="text" class="form-control"
+                    placeholder="Eslogan de la empresa">
+                </div>
+                <!--Input de descripcion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-circle-info" [class.green-icon]="this.form.get('emp_descripcion')?.valid"
+                      [class.red-icon]="this.form.get('emp_descripcion')?.invalid && this.form.get('emp_descripcion')?.touched"></i>
+                  </span>
+                  <textarea formControlName="emp_descripcion" type="text" class="form-control"
+                    placeholder="Descripción de la empresa" rows="10"></textarea>
+                </div>
+                <!--Input de telefono-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-square-phone" [class.green-icon]="this.form.get('emp_telefono')?.valid"
+                      [class.red-icon]="this.form.get('emp_telefono')?.invalid && this.form.get('emp_telefono')?.touched"></i>
+                  </span>
+                  <input formControlName="emp_telefono" type="text" class="form-control"
+                    placeholder="Telefono de la empresa">
+                </div>
+                <!--Input de foto-->
+                <strong>Nota</strong>
+                <br>
+
+                <span>La imagen no puede exceder los 50 Kilobytes.</span>
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-image" [class.green-icon]="this.form.get('emp_foto')?.valid"
+                      [class.red-icon]="this.form.get('emp_foto')?.invalid && this.form.get('emp_foto')?.touched"></i>
+                  </span>
+                  <input formControlName="emp_foto" type="file" class="form-control" placeholder="foto"
+                    (change)="convertBase($event)">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset()" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol === 'admin'">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE NOTICIAS</h5>
+        <hr>
+        <table class="table">
+          <thead>
+            <tr>
+              <td><strong>Codigo</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Subtitulo</strong></td>
+              <td><strong>Descripción</strong></td>
+              <td><strong>Telefono</strong></td>
+              <td><strong>Foto</strong></td>
+              <td><strong>Acciones</strong></td>
+            </tr>
+          </thead>
+          <tbody class="align-middle">
+            <tr *ngFor="let Company of Companys let iControl=index">
+              <td>{{Company.emp_codigo}}</td>
+              <td>{{Company.emp_nombre}}</td>
+              <td>{{Company.emp_subtitulo}}</td>
+              <td>{{Company.emp_descripcion}}</td>
+              <td>{{Company.emp_telefono}}</td>
+              <td><img src="{{Company.emp_foto}}" alt="foto_{{Company.emp_nombre}}" width="100%" height="150px"></td>
+              <td>
+                <i (click)="selectCompany(Company)" class="far fa-solid fa-pen-to-square text-info"
+                  data-bs-toggle="collapse" href="#addCompany">&nbsp;</i>
+                <i (click)="deleteCompany(Company.emp_codigo,iControl)" class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol === 'farmer'">
+    <div *ngFor="let Company of Companys let iControl=index">
+      <div class="card col-4">
+        <img src="{{Company.emp_foto}}" class="card-img-top" alt="Imagen de: {{Company.emp_nombre}}" height="200px">
+        <div class="card-body">
+          <h5 class="card-title">{{Company.emp_nombre }}</h5>
+          <h6 class="card-subtitle">{{Company.emp_subtitulo}}</h6>
+          <p class="card-text">{{Company.emp_descripcion}}</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"><span>Telefono: </span>{{Company.emp_telefono}}</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
