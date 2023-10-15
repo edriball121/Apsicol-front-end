@@ -17,6 +17,7 @@ export class EmpleoComponent implements OnInit {
   TituloAccion = 'Agregar';
   emp_codigo: string | undefined;
   rol!: string;
+  selectedJob: any;
   constructor(
     private fb: FormBuilder,
     private JobService: EmpleoService,
@@ -41,8 +42,11 @@ export class EmpleoComponent implements OnInit {
   getJobs() {
     this.JobService.getJob().subscribe(respuesta => {
       this.Jobs = respuesta;
-      console.log(this.Jobs);
     })
+  }
+  //seleccionar un empleo
+  selectOneJob(job: any) {
+    this.selectedJob = job;
   }
   //Agregar empleo
   addJob() {
@@ -93,7 +97,7 @@ export class EmpleoComponent implements OnInit {
       emp_nombre: Jobs.emp_nombre,
       emp_terminos_y_condiciones: Jobs.emp_terminos_y_condiciones,
       emp_descripcion: Jobs.emp_descripcion,
-    })
+    });
   }
   //Eliminar trabajo
   deleteJob(emp_codigo: any, iControl: any) {
