@@ -1,1 +1,106 @@
-<p>empleo works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Empleo</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <button class="btn" data-bs-toggle="collapse" href="#addJob" aria-expanded="false" aria-controls="addJob">
+        <h5 class="font-weight-bold">{{TituloAccion | uppercase}} TRABAJO</h5>
+      </button>
+      <div class="collapse" id="addJob">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addJob()">
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('emp_nombre')?.valid"
+                      [class.red-icon]="this.form.get('emp_nombre')?.invalid && this.form.get('emp_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="emp_nombre" type="text" class="form-control" placeholder="Nombre del empleo">
+                </div>
+                <!--Input de terminos-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-file-contract"
+                      [class.green-icon]="this.form.get('emp_terminos_y_condiciones')?.valid"
+                      [class.red-icon]="this.form.get('emp_terminos_y_condiciones')?.invalid && this.form.get('emp_terminos_y_condiciones')?.touched"></i>
+                  </span>
+                  <textarea formControlName="emp_terminos_y_condiciones" class="form-control"
+                    placeholder="Terminos y condiciones" cols="30" rows="10"></textarea>
+                </div>
+                <!--Input de descripcion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-heading" [class.green-icon]="this.form.get('emp_descripcion')?.valid"
+                      [class.red-icon]="this.form.get('emp_descripcion')?.invalid && this.form.get('emp_descripcion')?.touched"></i>
+                  </span>
+                  <textarea formControlName="emp_descripcion" class="form-control" placeholder="Descripción: Incluir todos los datos de contacto necesarios para que el interesado se ponga en contacto con usted"
+                    cols="30" rows="10"></textarea>
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset();" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="titulo">LISTADO DE EMPLEOS</h5>
+        <hr>
+        <table class="table">
+          <thead>
+            <tr>
+              <td><strong>Codigo</strong></td>
+              <td><strong>Nombre</strong></td>
+              <td><strong>Terminos y condiciones</strong></td>
+              <td><strong>Fecha creación</strong></td>
+              <td><strong>Descripción</strong></td>
+              <td><strong>Acciones</strong></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Job of Jobs let iControl=index">
+              <td>{{Job.emp_codigo}}</td>
+              <td>{{Job.emp_nombre}}</td>
+              <td>{{Job.emp_terminos_y_condiciones}}</td>
+              <td>{{Job.emp_fecha_creacion}}</td>
+              <td>{{Job.emp_descripcion}}</td>
+              <td>
+                <i (click)="selectJob(Job)" class="far fa-solid fa-pen-to-square text-info" data-bs-toggle="collapse"
+                  href="#addJob">&nbsp;</i>
+                <i (click)="deleteJob(Job.emp_codigo,iControl)" class="far fa-solid fa-trash text-danger"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card border-success col-3" id="cardJob" *ngFor="let Job of Jobs let iControl=index">
+      <div class="card-header bg-transparent border-success">
+        <h3>{{Job.emp_nombre}}</h3>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title text-truncate">{{Job.emp_descripcion}}</h6>
+        <p class="card-text text-truncate">{{Job.emp_terminos_y_condiciones}}</p>
+      </div>
+      <div class="card-footer bg-transparent border-success">{{Job.emp_fecha_creacion}}</div>
+    </div>
+  </div>
+</div>
