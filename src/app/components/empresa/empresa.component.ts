@@ -17,6 +17,7 @@ export class EmpresaComponent implements OnInit {
   base64Image: string = '';
   emp_codigo!: string;
   rol!: string;
+  imagenUrl!: string;
   constructor(
     private fb: FormBuilder,
     private CompanyService: EmpresaService,
@@ -92,7 +93,7 @@ export class EmpresaComponent implements OnInit {
       emp_descripcion: Companys.emp_descripcion,
       emp_telefono: Companys.emp_telefono,
     });
-    this.base64Image = Companys.not_foto
+    this.imagenUrl = Companys.not_foto
   }
   //Eliminar empresa
   deleteCompany(emp_codigo: any, iControl: any) {
