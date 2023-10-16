@@ -1,1 +1,178 @@
-<p>finca works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Finca</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol === 'admin'"><!--contenido para el admin-->
+    <div class="row">
+      <button class="btn" data-bs-toggle="collapse" href="#addFarm" aria-expanded="false" aria-controls="addFarm">
+        <h5 class="font-weight-bold text-start">{{TituloAccion | uppercase}} FINCAS</h5>
+      </button>
+      <div class="collapse" id="addFarm">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addFarms()">
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-heading" [class.green-icon]="this.form.get('fin_nombre')?.valid"
+                      [class.red-icon]="this.form.get('fin_nombre')?.invalid && this.form.get('fin_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="fin_nombre" type="text" class="form-control" placeholder="Nombre de la finca">
+                </div>
+                <!--Input tamaño-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-pen-ruler" [class.green-icon]="this.form.get('fin_tamanno')?.valid"
+                      [class.red-icon]="this.form.get('fin_tamanno')?.invalid && this.form.get('fin_tamanno')?.touched"></i>
+                  </span>
+                  <input formControlName="fin_tamanno" type="text" class="form-control"
+                    placeholder="Tamaño de la finca en metros cuadrados">
+                </div>
+                <!--Input de direccion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-compass" [class.green-icon]="this.form.get('fin_direccion')?.valid"
+                      [class.red-icon]="this.form.get('fin_direccion')?.invalid && this.form.get('fin_direccion')?.touched"></i>
+                  </span>
+                  <input formControlName="fin_direccion" type="text" class="form-control"
+                    placeholder="Direccion de la finca">
+                </div>
+                <!--Input de productos-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-seedling" [class.green-icon]="this.form.get('fin_productos')?.valid"
+                      [class.red-icon]="this.form.get('fin_productos')?.invalid && this.form.get('fin_productos')?.touched"></i>
+                  </span>
+
+                  <textarea formControlName="fin_productos" type="text" class="form-control"
+                    placeholder="Describa los productos de la finca" rows="10"></textarea>
+                </div>
+                <!--Input de descripcion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-person-digging" [class.green-icon]="this.form.get('fin_descripcion')?.valid"
+                      [class.red-icon]="this.form.get('fin_descripcion')?.invalid && this.form.get('fin_descripcion')?.touched"></i>
+                  </span>
+
+                  <textarea formControlName="fin_descripcion" type="text" class="form-control"
+                    placeholder="Descripción de la actividad de la finca" rows="10"></textarea>
+                </div>
+                <!--Input de telefono-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-square-phone" [class.green-icon]="this.form.get('fin_telefono')?.valid"
+                      [class.red-icon]="this.form.get('fin_telefono')?.invalid && this.form.get('fin_telefono')?.touched"></i>
+                  </span>
+                  <input formControlName="fin_telefono" type="text" class="form-control"
+                    placeholder="Telefono de contacto de la finca">
+                </div>
+                <!--Input de foto-->
+                <strong>Nota</strong>
+                <br>
+
+                <span>La imagen no puede exceder los 50 Kilobytes.</span>
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-image" [class.green-icon]="this.form.get('fin_foto')?.valid"
+                      [class.red-icon]="this.form.get('fin_foto')?.invalid && this.form.get('fin_foto')?.touched"></i>
+                  </span>
+                  <input formControlName="fin_foto" type="file" class="form-control" placeholder="foto"
+                    (change)="convertBase($event)">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset()" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="titulo">LISTADO DE FINCAS</h5>
+          <hr>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><strong>Codigo</strong></td>
+                <td><strong>foto</strong></td>
+                <td><strong>Nombre</strong></td>
+                <td><strong>Tamaño</strong></td>
+                <td><strong>Dirección</strong></td>
+                <td><strong>Productos</strong></td>
+                <td><strong>Telefono</strong></td>
+                <td><strong>Descripción</strong></td>
+                <td><strong>Acciones</strong></td>
+              </tr>
+            </thead>
+            <tbody class="align-middle">
+              <tr *ngFor="let Farm of Farms let iControl=index">
+                <td>{{Farm.fin_codigo}}</td>
+                <td><img src="{{Farm.fin_foto}}" alt="" width="100%" height="150px"></td>
+                <td>{{Farm.fin_nombre}}</td>
+                <td>{{Farm.fin_tamanno}}</td>
+                <td>{{Farm.fin_direccion}}</td>
+                <td>{{Farm.fin_productos}}</td>
+                <td>{{Farm.fin_telefono}}</td>
+                <td>{{Farm.fin_descripcion}}</td>
+                <td>
+                  <i (click)="selectFarm(Farm)" class="far fa-solid fa-pen-to-square text-info"
+                    data-bs-toggle="collapse" href="#addFarm">&nbsp;</i>
+                  <i (click)="deleteFarm(Farm.fin_codigo,iControl)" class="far fa-solid fa-trash text-danger"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="rol === 'farmer'"><!--contenido para el granjero-->
+    <div class="row">
+      <div class="card border-success col-3" id="cardJob" *ngFor="let Farm of Farms let iControl=index"
+        data-bs-toggle="modal" data-bs-target="#farmDetail" (click)="selectOneFarm(Farm)">
+        <div class="card-header bg-transparent border-success">
+          <h3>{{Farm.fin_nombre}}</h3>
+        </div>
+        <div class="card-body">
+          <h6 class="card-title text-truncate">{{Farm.fin_descripcion}}</h6>
+          <p class="card-text text-truncate">{{Farm.fin_telefono}}</p>
+        </div>
+        <div class="card-footer bg-transparent border-success">{{Farm.fin_direccion}}</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="modal fade" id="farmDetail" tabindex="-1" aria-labelledby="farmDetailLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xs">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="farmDetailLabel"><strong>Nombre: </strong>{{selectedFarm?.fin_nombre}}</h5>
+            </div>
+            <div class="modal-body">
+              <img src="{{selectedFarm?.fin_foto}}" alt="{{selectedFarm?.fin_nombre}}" width="100%" height="200 rem">
+              <hr>
+              <p><strong>Descripción: </strong>{{selectedFarm?.fin_descripcion}}</p>
+              <p><strong>Productos: </strong>{{selectedFarm?.fin_productos}}</p>
+              <p><strong>Area: </strong>{{selectedFarm?.fin_tamanno}}</p>
+              <p><Strong>Telefono: </Strong>{{selectedFarm?.fin_telefono}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

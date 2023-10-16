@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-noticias',
   templateUrl: './noticias.component.html',
-  styleUrls: [ './noticias.component.css' ]
+  styleUrls: ['./noticias.component.css']
 })
 export class NoticiasComponent implements OnInit {
   form: FormGroup;
@@ -28,11 +28,11 @@ export class NoticiasComponent implements OnInit {
   ) {
     //restriccion del formulario
     this.form = this.fb.group({
-      not_nombre: [ '', Validators.required ],
-      not_descripcion: [ '', Validators.required ],
-      not_foto: [ '' ],
-      not_url: [ '', Validators.required ],
-      not_subtitulo: [ '', Validators.required ],
+      not_nombre: ['', Validators.required],
+      not_descripcion: ['', Validators.required],
+      not_foto: [''],
+      not_url: ['', Validators.required],
+      not_subtitulo: ['', Validators.required],
     })
   }
 
@@ -50,7 +50,7 @@ export class NoticiasComponent implements OnInit {
   addNews() {
     //formatear la fecha
     const fechaActualUtc: Date = new Date();
-    const fechaFormateada: string = fechaActualUtc.toISOString().split('T')[ 0 ];
+    const fechaFormateada: string = fechaActualUtc.toISOString().split('T')[0];
     this.adm_cedula = this.verifyToken.obtenerCedulaUsuario();
     const News: any = {
       not_codigo: this.not_codigo,
@@ -100,7 +100,7 @@ export class NoticiasComponent implements OnInit {
       not_url: News.not_url,
       not_subtitulo: News.not_subtitulo,
     });
-    this.imagenUrl = News.not_foto
+    this.imagenUrl = News.not_foto;
   }
   deleteNews(not_codigo: any, iControl: any) {
     Swal.fire({
@@ -133,7 +133,7 @@ export class NoticiasComponent implements OnInit {
 
   //convertir imagen a base64
   convertBase(event: any): void {
-    const file = event.target.files[ 0 ];
+    const file = event.target.files[0];
     if (file) {
       this.convertToBase64(file);
     }

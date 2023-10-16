@@ -26,9 +26,9 @@ export class EmpleoComponent implements OnInit {
   ) {
     //restricciones del formulario
     this.form = this.fb.group({
-      emp_nombre: [''],
-      emp_terminos_y_condiciones: [''],
-      emp_descripcion: [''],
+      emp_nombre: ['', Validators.required],
+      emp_terminos_y_condiciones: ['', Validators.required],
+      emp_descripcion: ['', Validators.required],
     })
   }
 
