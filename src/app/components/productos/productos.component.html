@@ -1,1 +1,145 @@
-<p>productos works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Producto</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row"><!--Contenido del admin-->
+    <div class="row">
+      <button class="btn" data-bs-toggle="collapse" href="#addProduct" aria-expanded="false" aria-controls="addProduct">
+        <h5 class="font-weight-bold text-start">{{TituloAccion | uppercase}} PRODUCTOS</h5>
+      </button>
+      <div class="collapse" id="addProduct">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addProduct()">
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-heading" [class.green-icon]="this.form.get('pro_nombre')?.valid"
+                      [class.red-icon]="this.form.get('pro_nombre')?.invalid && this.form.get('pro_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="pro_nombre" type="text" class="form-control" placeholder="Nombre de la finca">
+                </div>
+                <!--Input precio-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-pen-ruler" [class.green-icon]="this.form.get('pro_precio')?.valid"
+                      [class.red-icon]="this.form.get('pro_precio')?.invalid && this.form.get('pro_precio')?.touched"></i>
+                  </span>
+                  <input formControlName="pro_precio" type="text" class="form-control"
+                    placeholder="Tamaño de la finca en metros cuadrados">
+                </div>
+                <!--Input de estado-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-compass" [class.green-icon]="this.form.get('pro_estado')?.valid"
+                      [class.red-icon]="this.form.get('pro_estado')?.invalid && this.form.get('pro_estado')?.touched"></i>
+                  </span>
+                  <input formControlName="pro_estado" type="text" class="form-control"
+                    placeholder="Direccion de la finca">
+                </div>
+                <!--Input de cantidad-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-compass" [class.green-icon]="this.form.get('pro_cantidad')?.valid"
+                      [class.red-icon]="this.form.get('pro_cantidad')?.invalid && this.form.get('pro_cantidad')?.touched"></i>
+                  </span>
+                  <input formControlName="pro_cantidad" type="text" class="form-control"
+                    placeholder="Direccion de la finca">
+                </div>
+                <!--Input de terminos y condiciones-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-seedling"
+                      [class.green-icon]="this.form.get('pro_terminos_y_condiciones')?.valid"
+                      [class.red-icon]="this.form.get('pro_terminos_y_condiciones')?.invalid && this.form.get('pro_terminos_y_condiciones')?.touched"></i>
+                  </span>
+
+                  <textarea formControlName="pro_terminos_y_condiciones" type="text" class="form-control"
+                    placeholder="Describa los productos de la finca" rows="10"></textarea>
+                </div>
+                <!--Input de descripcion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-person-digging" [class.green-icon]="this.form.get('pro_descripcion')?.valid"
+                      [class.red-icon]="this.form.get('pro_descripcion')?.invalid && this.form.get('pro_descripcion')?.touched"></i>
+                  </span>
+
+                  <textarea formControlName="pro_descripcion" type="text" class="form-control"
+                    placeholder="Descripción de la actividad de la finca" rows="10"></textarea>
+                </div>
+                <!--Input de foto-->
+                <strong>Nota</strong>
+                <br>
+
+                <span>La imagen no puede exceder los 50 Kilobytes.</span>
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-image" [class.green-icon]="this.form.get('pro_foto')?.valid"
+                      [class.red-icon]="this.form.get('pro_foto')?.invalid && this.form.get('pro_foto')?.touched"></i>
+                  </span>
+                  <input formControlName="pro_foto" type="file" class="form-control" placeholder="foto"
+                    (change)="convertBase($event)">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset()" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="titulo">LISTADO DE PRODUCTOS</h5>
+          <hr>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><strong>Codigo</strong></td>
+                <td><strong>foto</strong></td>
+                <td><strong>Nombre</strong></td>
+                <td><strong>Descripcion</strong></td>
+                <td><strong>Precio</strong></td>
+                <td><strong>Estado</strong></td>
+                <td><strong>Cantidad</strong></td>
+                <td><strong>Terminos y condiciones</strong></td>
+                <td><strong>Acciones</strong></td>
+              </tr>
+            </thead>
+            <tbody class="align-middle">
+              <tr *ngFor="let Product of Products let iControl=index">
+                <td>{{Product.pro_codigo}}</td>
+                <td><img src="{{Product.pro_foto}}" alt="" width="100%" height="150px"></td>
+                <td>{{Product.pro_nombre}}</td>
+                <td>{{Product.pro_precio}}</td>
+                <td>{{Product.pro_estado}}</td>
+                <td>{{Product.pro_terminos_y_condiciones}}</td>
+                <td>{{Product.pro_cantidad}}</td>
+                <td>{{Product.pro_descripcion}}</td>
+                <td>
+                  <i (click)="selectProduct(Product)" class="far fa-solid fa-pen-to-square text-info"
+                    data-bs-toggle="collapse" href="#addProduct">&nbsp;</i>
+                  <i (click)="deleteProduct(Product.pro_codigo,iControl)" class="far fa-solid fa-trash text-danger"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"><!--Contenido del agricultor-->
+
+  </div>
+</div>
