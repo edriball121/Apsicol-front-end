@@ -6,7 +6,7 @@
       </div>
     </div>
   </div>
-  <div class="row"><!--Contenido del admin-->
+  <div class="row" *ngIf="rol === 'admin'"><!--Contenido del admin-->
     <div class="row">
       <button class="btn" data-bs-toggle="collapse" href="#addProduct" aria-expanded="false" aria-controls="addProduct">
         <h5 class="font-weight-bold text-start">{{TituloAccion | uppercase}} PRODUCTOS</h5>
@@ -139,7 +139,43 @@
       </div>
     </div>
   </div>
-  <div class="row"><!--Contenido del agricultor-->
-
+  <div class="row" *ngIf="rol === 'farmer'"><!--Contenido del agricultor-->
+    <div class="row">
+      <div class="card border-success col-3" id="cardProduct" *ngFor="let Product of Products let iControl=index"
+        data-bs-toggle="modal" data-bs-target="#productDetail" (click)="selectOneProduct(Product)">
+        <div class="card-header bg-transparent border-success">
+          <h3>{{Product.pro_nombre}}</h3>
+        </div>
+        <div class="card-body">
+          <h6 class="card-title text-truncate">{{Product.pro_descripcion}}</h6>
+        </div>
+        <div class="card-footer bg-transparent border-success">{{Product.pro_precio}}</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="modal fade" id="productDetail" tabindex="-1" aria-labelledby="productDetailLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xs">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="productDetailLabel"><strong>Nombre: </strong>{{selectedProduct?.pro_nombre}}
+              </h5>
+            </div>
+            <div class="modal-body">
+              <img src="{{selectedProduct?.pro_foto}}" alt="{{selectedProduct?.pro_nombre}}" width="100%"
+                height="200 rem">
+              <hr>
+              <p><strong>Descripción: </strong>{{selectedProduct?.pro_descripcion}}</p>
+              <p><strong>Precio: </strong>{{selectedProduct?.pro_precio}}</p>
+              <p><strong>Estado: </strong>{{selectedProduct?.pro_estado}}</p>
+              <p><Strong>Cantidad: </Strong>{{selectedProduct?.pro_cantidad}}</p>
+              <p><Strong>Terminos y condiciones: </Strong>{{selectedProduct?.pro_terminos_y_condiciones}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
