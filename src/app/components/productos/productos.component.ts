@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css']
+  styleUrls: [ './productos.component.css' ]
 })
 export class ProductosComponent implements OnInit {
   form: FormGroup;
@@ -19,6 +19,7 @@ export class ProductosComponent implements OnInit {
   rol!: string;
   base64Image: string = '';
   imagenUrl!: string;
+  selectedProduct: any;
   constructor(
     private fb: FormBuilder,
     private ProductService: ProductosService,
@@ -27,13 +28,13 @@ export class ProductosComponent implements OnInit {
   ) {
     //restricciones del formulario
     this.form = this.fb.group({
-      pro_nombre: [''],
-      pro_descripcion: [''],
-      pro_precio: [''],
-      pro_estado: [''],
-      pro_cantidad: [''],
-      pro_terminos_y_condiciones: [''],
-      pro_foto: [''],
+      pro_nombre: [ '' ],
+      pro_descripcion: [ '' ],
+      pro_precio: [ '' ],
+      pro_estado: [ '' ],
+      pro_cantidad: [ '' ],
+      pro_terminos_y_condiciones: [ '' ],
+      pro_foto: [ '' ],
     });
   }
 
@@ -48,6 +49,10 @@ export class ProductosComponent implements OnInit {
       this.Products = respuesta;
       console.log(respuesta);
     })
+  }
+  //seleccionar un producto
+  selectOneProduct(product: any) {
+    this.selectedProduct = product;
   }
   //Agregar productos
   addProduct() {
@@ -133,7 +138,7 @@ export class ProductosComponent implements OnInit {
   }
   //convertir imagen a base64
   convertBase(event: any): void {
-    const file = event.target.files[0];
+    const file = event.target.files[ 0 ];
     if (file) {
       this.convertToBase64(file);
     }

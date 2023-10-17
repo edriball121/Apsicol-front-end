@@ -140,7 +140,7 @@
   </div>
   <div class="row" *ngIf="rol === 'farmer'"><!--contenido para el granjero-->
     <div class="row">
-      <div class="card border-success col-3" id="cardJob" *ngFor="let Farm of Farms let iControl=index"
+      <div class="card border-success col-3" id="cardFarm" *ngFor="let Farm of Farms let iControl=index"
         data-bs-toggle="modal" data-bs-target="#farmDetail" (click)="selectOneFarm(Farm)">
         <div class="card-header bg-transparent border-success">
           <h3>{{Farm.fin_nombre}}</h3>
