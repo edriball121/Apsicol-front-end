@@ -102,9 +102,6 @@ export class ConsultaComponent implements OnInit {
           });
         })
     }
-
-
-
   }
   //obtener los datos del formulario de consulta para editarlo
   selectConsultation(Consultation: any) {

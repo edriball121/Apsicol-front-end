@@ -1,0 +1,10 @@
+#cardService {
+  margin-top: 1rem;
+  margin-left: 5rem;
+}
+
+#cardService:hover {
+  border-width: 0.2rem;
+  background: rgba(0, 183, 74, 0.2);
+  cursor: pointer;
+}
