@@ -11,6 +11,7 @@ export class GranjeroService {
   BASEAPI: string = 'http://localhost:3000/api/v1/';
   FARMERAPI: string = 'farmer/';
   LOGIN: string = 'login/'
+  RECOVER: string = 'recover-pw/'
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
@@ -19,6 +20,11 @@ export class GranjeroService {
   getLoginFarmer(gra_cedula: any, gra_password: any) {
     const body = { gra_cedula, gra_password };
     return this.http.post(this.BASEAPI + this.FARMERAPI + this.LOGIN, body);
+  }
+  //recuperar contraseña
+  recoverPasswordFarmer(gra_cedula: any, gra_email: any) {
+    const body = { gra_cedula, gra_email };
+    return this.http.post(this.BASEAPI + this.FARMERAPI + this.RECOVER, body);
   }
   isLogin(): boolean {
     const token = localStorage.getItem('token');
