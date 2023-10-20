@@ -35,6 +35,7 @@ import { VerifyToken } from './services/verify-token.service';
 import { DecisionTreeComponent } from './components/decision-tree/decision-tree.component';
 import { DetalleAgricolaPecuarioComponent } from './components/detalle-agricola-pecuario/detalle-agricola-pecuario.component';
 import { ContactanosComponent } from './components/contactanos/contactanos.component';
+import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ContactanosComponent } from './components/contactanos/contactanos.compo
     DecisionTreeComponent,
     DetalleAgricolaPecuarioComponent,
     ContactanosComponent,
+    AcercaDeComponent,
   ],
   imports: [
     BrowserModule,

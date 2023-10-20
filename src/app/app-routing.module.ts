@@ -25,6 +25,7 @@ import { FincaComponent } from './components/finca/finca.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { ServiciosComponent } from './components/servicios/servicios.component';
 import { ContactanosComponent } from './components/contactanos/contactanos.component';
+import { AcercaDeComponent } from './components/acerca-de/acerca-de.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landingPage' },
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'product', component: ProductosComponent, data: { expectedRole: [ 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'services', component: ServiciosComponent, data: { expectedRole: [ 'admin', 'farmer' ] }, canActivate: [ RoleGuard, AuthGuard ] },
   { path: 'contact-us', component: ContactanosComponent },
+  { path: 'about-us', component: AcercaDeComponent },
   //Not Found
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
