@@ -28,13 +28,13 @@ export class ProductosComponent implements OnInit {
   ) {
     //restricciones del formulario
     this.form = this.fb.group({
-      pro_nombre: [ '' ],
-      pro_descripcion: [ '' ],
-      pro_precio: [ '' ],
-      pro_estado: [ '' ],
-      pro_cantidad: [ '' ],
-      pro_terminos_y_condiciones: [ '' ],
-      pro_foto: [ '' ],
+      pro_nombre: [ '', Validators.required ],
+      pro_descripcion: [ '', Validators.required ],
+      pro_precio: [ '', Validators.required ],
+      pro_estado: [ '', Validators.required ],
+      pro_cantidad: [ '', Validators.required ],
+      pro_terminos_y_condiciones: [ '', Validators.required ],
+      pro_foto: [ '', Validators.required ],
     });
   }
 
@@ -47,7 +47,6 @@ export class ProductosComponent implements OnInit {
   listProducts() {
     this.ProductService.getProduct().subscribe(respuesta => {
       this.Products = respuesta;
-      console.log(respuesta);
     })
   }
   //seleccionar un producto

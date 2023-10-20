@@ -1,1 +1,156 @@
-<p>servicios works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">Servicios</h1>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="rol === 'admin'"><!--Contenido del admin-->
+    <div class="row">
+      <button class="btn" data-bs-toggle="collapse" href="#addService" aria-expanded="false" aria-controls="addService">
+        <h5 class="font-weight-bold text-start">{{TituloAccion | uppercase}} SERVICIOS</h5>
+      </button>
+      <div class="collapse" id="addService">
+        <div class="row">
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="form" (ngSubmit)="addService()">
+                <!--Input de nombre-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-heading" [class.green-icon]="this.form.get('ser_nombre')?.valid"
+                      [class.red-icon]="this.form.get('ser_nombre')?.invalid && this.form.get('ser_nombre')?.touched"></i>
+                  </span>
+                  <input formControlName="ser_nombre" type="text" class="form-control"
+                    placeholder="Nombre del servicio">
+                </div>
+                <!--Input valor-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-pen-ruler" [class.green-icon]="this.form.get('ser_valor')?.valid"
+                      [class.red-icon]="this.form.get('ser_valor')?.invalid && this.form.get('ser_valor')?.touched"></i>
+                  </span>
+                  <input formControlName="ser_valor" type="text" class="form-control"
+                    placeholder="Valor de el servicio">
+                </div>
+                <!--Input de empresa-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-font" [class.green-icon]="this.form.get('fk_ser_emp_codigo')?.valid"
+                      [class.red-icon]="this.form.get('fk_ser_emp_codigo')?.invalid && this.form.get('fk_ser_emp_codigo')?.touched"></i>
+                  </span>
+                  <select formControlName="fk_ser_emp_codigo" class="form-select">
+                    <option value="" disabled selected>Seleccionar...</option>
+                    <option *ngFor="let Company of Companys" [value]="Company.emp_codigo">{{ Company.emp_nombre }}
+                    </option>
+                  </select>
+                </div>
+                <!--Input de descripcion-->
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-person-digging" [class.green-icon]="this.form.get('ser_descripcion')?.valid"
+                      [class.red-icon]="this.form.get('ser_descripcion')?.invalid && this.form.get('ser_descripcion')?.touched"></i>
+                  </span>
+                  <textarea formControlName="ser_descripcion" type="text" class="form-control"
+                    placeholder="Descripción de el servicio" rows="10"></textarea>
+                </div>
+                <!--Input de foto-->
+                <strong>Nota</strong>
+                <br>
+                <span>La imagen no puede exceder los 50 Kilobytes.</span>
+                <div class="input-group input-group-lg mb-3">
+                  <span class="input-group-text">
+                    <i class="fa-solid fa-image" [class.green-icon]="this.form.get('ser_foto')?.valid"
+                      [class.red-icon]="this.form.get('ser_foto')?.invalid && this.form.get('ser_foto')?.touched"></i>
+                  </span>
+                  <input formControlName="ser_foto" type="file" class="form-control" placeholder="foto"
+                    (change)="convertBase($event)">
+                </div>
+                <!--Boton de Crear/Editar-->
+                <div>
+                  <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
+                  <button class="btn btn-warning" (click)="this.form.reset()" type="button"><i
+                      class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="titulo">LISTADO DE SERVICIOS</h5>
+          <hr>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><strong>Codigo</strong></td>
+                <td><strong>foto</strong></td>
+                <td><strong>Nombre</strong></td>
+                <td><strong>Valor</strong></td>
+                <td><strong>ID empresa</strong></td>
+                <td><strong>Descripción</strong></td>
+                <td><strong>Acciones</strong></td>
+              </tr>
+            </thead>
+            <tbody class="align-middle">
+              <tr *ngFor="let Service of Services let iControl=index">
+                <td>{{Service.ser_codigo}}</td>
+                <td><img src="{{Service.ser_foto}}" alt="" width="100%" height="150px"></td>
+                <td>{{Service.ser_nombre}}</td>
+                <td>{{Service.ser_valor}}</td>
+                <td>{{Service.FK_ser_emp_codigo}}</td>
+                <td>{{Service.ser_descripcion}}</td>
+                <td>
+                  <i (click)="selectService(Service)" class="far fa-solid fa-pen-to-square text-info"
+                    data-bs-toggle="collapse" href="#addService">&nbsp;</i>
+                  <i (click)="deleteService(Service.ser_codigo,iControl)" class="far fa-solid fa-trash text-danger"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="rol === 'farmer'"><!--Contenido del granjero-->
+    <div class="row">
+      <div class="card border-success col-3" id="cardService" *ngFor="let Service of Services let iControl=index"
+        data-bs-toggle="modal" data-bs-target="#ServiceDetail" (click)="selectOneService(Service)">
+        <div class="card-header bg-transparent border-success">
+          <h3>{{Service.ser_nombre}}</h3>
+        </div>
+        <div class="card-body">
+          <h6 class="card-title text-truncate">{{Service.ser_descripcion}}</h6>
+        </div>
+        <div class="card-footer bg-transparent border-success">{{Service.ser_valor}}</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="modal fade" id="ServiceDetail" tabindex="-1" aria-labelledby="ServiceDetailLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xs">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ServiceDetailLabel"><strong>Nombre: </strong>{{selectedService?.ser_nombre}}
+              </h5>
+            </div>
+            <div class="modal-body">
+              <img src="{{selectedService?.ser_foto}}" alt="{{selectedService?.ser_nombre}}" width="100%"
+                height="200 rem">
+              <hr>
+              <p><strong>Descripción: </strong>{{selectedService?.ser_descripcion}}</p>
+              <p><strong>Precio: </strong>{{selectedService?.ser_valor}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

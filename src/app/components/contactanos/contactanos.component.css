@@ -1,0 +1,32 @@
+#title-contact {
+  margin-top: 20%;
+  color: green;
+}
+#message-contact {
+  font-style: oblique;
+  font-size: x-large;
+  font-family: "Times New Roman", Times, serif;
+}
+i {
+  color: gray;
+  /* Define una transformación 3D inicial */
+  transform: perspective(1000px) rotateY(0deg);
+  /* Establece una transición para suavizar la animación */
+  transition: transform 0.5s;
+}
+
+i:hover {
+  color: rgba(0, 128, 0, 0.496);
+  animation: alternate;
+  cursor: pointer;
+  border-color: green;
+  animation: spin 2s infinite;
+}
+@keyframes spin {
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(360deg);
+  }
+}

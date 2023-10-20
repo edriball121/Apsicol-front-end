@@ -5,7 +5,7 @@
         <h1 class="text-center">Noticias</h1>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="rol === 'admin'">
       <div>
         <button class="btn" data-bs-toggle="collapse" href="#addNews" aria-expanded="false" aria-controls="addNews">
           <h5 class="font-weight-bold">{{TituloAccion | uppercase}} NOTICIAS</h5>
@@ -61,15 +61,16 @@
                       <i class="fa-solid fa-image" [class.green-icon]="this.form.get('not_foto')?.valid"
                         [class.red-icon]="this.form.get('not_foto')?.invalid && this.form.get('not_foto')?.touched"></i>
                     </span>
-                    <input formControlName="not_foto" type="file" class="form-control" placeholder="foto" (change)="convertBase($event)">
+                    <input formControlName="not_foto" type="file" class="form-control" placeholder="foto"
+                      (change)="convertBase($event)">
                   </div>
                   <!--Boton de Crear/Editar-->
                   <div>
                     <button [disabled]="this.form.invalid" class="btn btn-success" type="submit">
                       <i class="fa-solid fa-database"></i>&nbsp;Guardar</button>
-                      <button class="btn btn-warning" (click)="this.form.reset()"  type="button"><i
+                    <button class="btn btn-warning" (click)="this.form.reset()" type="button"><i
                         class="fa-solid fa-delete-left"></i>&nbsp;Limpiar formulario</button>
-                    </div>
+                  </div>
                 </form>
               </div>
             </div>
@@ -93,7 +94,7 @@
                 <td><strong>Fecha creación</strong></td>
                 <td><strong>Fuente URL</strong></td>
                 <td><strong>Usuario</strong></td>
-                <td><strong>Acciones</strong></td>
+                <td *ngIf="rol === 'admin'"><strong>Acciones</strong></td>
               </tr>
             </thead>
             <tbody class="align-middle">
@@ -106,7 +107,7 @@
                 <td>{{News.not_fecha_creacion }}</td>
                 <td>{{News.not_url}}</td>
                 <td>{{News.fk_not_adm_cedula}}</td>
-                <td>
+                <td *ngIf="rol === 'admin'">
                   <i (click)="selectNews(News)" class="far fa-solid fa-pen-to-square text-info"
                     data-bs-toggle="collapse" href="#addNews">&nbsp;</i>
                   <i (click)="deleteNews(News.not_codigo,iControl)" class="far fa-solid fa-trash text-danger"></i>
